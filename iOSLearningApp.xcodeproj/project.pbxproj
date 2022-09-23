@@ -16,6 +16,8 @@
 		4D5AD43128DC6C76006EAC20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5AD43028DC6C76006EAC20 /* Constants.swift */; };
 		4D5AD43328DC6FB2006EAC20 /* UserDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5AD43228DC6FB2006EAC20 /* UserDetailsViewController.swift */; };
 		4D5AD43728DCBC6C006EAC20 /* UserDetailsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5AD43628DCBC6C006EAC20 /* UserDetailsModel.swift */; };
+		4D5AD43928DCDAF9006EAC20 /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5AD43828DCDAF9006EAC20 /* UserDetailsView.swift */; };
+		4D5AD43C28DD7B58006EAC20 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5AD43B28DD7B58006EAC20 /* NetworkManager.swift */; };
 		4DD476B928DAC65700080922 /* sample.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DD476B828DAC65700080922 /* sample.json */; };
 		4DD476BB28DAC73E00080922 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD476BA28DAC73E00080922 /* FileManager.swift */; };
 		4DD476BD28DACBB800080922 /* PullRequestsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD476BC28DACBB800080922 /* PullRequestsModel.swift */; };
@@ -33,6 +35,8 @@
 		4D5AD43028DC6C76006EAC20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4D5AD43228DC6FB2006EAC20 /* UserDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsViewController.swift; sourceTree = "<group>"; };
 		4D5AD43628DCBC6C006EAC20 /* UserDetailsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsModel.swift; sourceTree = "<group>"; };
+		4D5AD43828DCDAF9006EAC20 /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
+		4D5AD43B28DD7B58006EAC20 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		4DD476B828DAC65700080922 /* sample.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = sample.json; sourceTree = "<group>"; };
 		4DD476BA28DAC73E00080922 /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		4DD476BC28DACBB800080922 /* PullRequestsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestsModel.swift; sourceTree = "<group>"; };
@@ -70,6 +74,7 @@
 		060CA8DA285228E50053196E /* iOSLearningApp */ = {
 			isa = PBXGroup;
 			children = (
+				4D5AD43A28DD7B32006EAC20 /* NetworkManager */,
 				4DD476B828DAC65700080922 /* sample.json */,
 				4D5AD43528DCBC39006EAC20 /* UserDetails */,
 				4D5AD43428DCBC00006EAC20 /* PullRequests */,
@@ -80,6 +85,7 @@
 				060CA8E4285228E70053196E /* Assets.xcassets */,
 				060CA8E9285228E70053196E /* Info.plist */,
 				4D5AD43028DC6C76006EAC20 /* Constants.swift */,
+				4D5AD43828DCDAF9006EAC20 /* UserDetailsView.swift */,
 			);
 			path = iOSLearningApp;
 			sourceTree = "<group>";
@@ -101,6 +107,14 @@
 				4D5AD43628DCBC6C006EAC20 /* UserDetailsModel.swift */,
 			);
 			path = UserDetails;
+			sourceTree = "<group>";
+		};
+		4D5AD43A28DD7B32006EAC20 /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				4D5AD43B28DD7B58006EAC20 /* NetworkManager.swift */,
+			);
+			path = NetworkManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,9 +195,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D5AD43928DCDAF9006EAC20 /* UserDetailsView.swift in Sources */,
 				060CA8E0285228E50053196E /* PullRequestsView.swift in Sources */,
 				060CA8DC285228E50053196E /* AppDelegate.swift in Sources */,
 				060CA8DE285228E50053196E /* SceneDelegate.swift in Sources */,
+				4D5AD43C28DD7B58006EAC20 /* NetworkManager.swift in Sources */,
 				4DD476BB28DAC73E00080922 /* FileManager.swift in Sources */,
 				4D5AD43128DC6C76006EAC20 /* Constants.swift in Sources */,
 				4DD476BF28DC35D300080922 /* PullRequestsViewModel.swift in Sources */,

@@ -12,12 +12,11 @@ class PullRequestsView: UIViewController {
     
     private let screenHeadingLabel = UILabel()
     private let  pullRequestTableView = UITableView()
-    
     private let loadingContainerView = UIView()
     private let activityIndicator = UIActivityIndicatorView()
-    private var pullRequestsList: PullRequestsModel!
-    
+    private var pullRequestsList: [PullRequestItem] = []
     private let pullRequestViewModel = PullRequestsViewModel()
+
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -29,30 +28,14 @@ class PullRequestsView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+     
+        pullRequestViewModel.pullRequestsDelegate = self
+        pullRequestViewModel.viewDidLoad()
         
+        // MARK: old task - load data from file
         //self.pullRequestsList = FileManager.loadJson(filename: StringConstants.sampleJsonFileName.rawValue)
         
-         
         setupHeadingLabel()
-        showLoadingIndicator()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-            self.stopLoadindIndicator()
-        }
-        
-        
-//        view.addSubview(pullRequestTableView)
-//
-//        pullRequestTableView.dataSource = self
-//        pullRequestTableView.delegate = self
-//        pullRequestTableView.register(PullRequestsTableViewCell.self, forCellReuseIdentifier: StringConstants.pullRequestsCellIdentifier.rawValue)
-//
-//
-//
-//        pullRequestTableView.snp.makeConstraints{ make in
-//            make.top.equalTo(screenHeadingLabel.snp.bottom)
-//            make.leading.trailing.bottom.equalToSuperview()
-//        }
     }
     
     func setupHeadingLabel(){
@@ -63,7 +46,7 @@ class PullRequestsView: UIViewController {
             make in
             make.top.equalToSuperview().offset(60)
             make.leading.equalToSuperview().offset(10)
-            
+
         }
     }
     
@@ -73,7 +56,7 @@ class PullRequestsView: UIViewController {
         loadingContainerView.backgroundColor = .white
         loadingContainerView.snp.makeConstraints{
             make in
-            make.height.width.equalToSuperview()
+            make.top.bottom.leading.trailing.equalToSuperview()
         }
         loadingContainerView.addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints{
@@ -88,7 +71,6 @@ class PullRequestsView: UIViewController {
     func stopLoadindIndicator(){
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
-        loadingContainerView.removeFromSuperview()
     }
 
 }
@@ -97,28 +79,28 @@ class PullRequestsView: UIViewController {
 
 extension PullRequestsView : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pullRequestsList.items.count
+        return pullRequestsList.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StringConstants.pullRequestsCellIdentifier.rawValue) as! PullRequestsTableViewCell
-        let item = pullRequestsList.items[indexPath.row]
+        let item = pullRequestsList[indexPath.row]
         cell.setPullRequestTableCellData(item: item)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let item = pullRequestsList.items[indexPath.row]
+        //let item = pullRequestsList.items[indexPath.row]
         print("clicked \(indexPath.row)")
-        let alertController = UIAlertController(title: "\(item.user.login)"
-            , message: "Item clicked", preferredStyle: .actionSheet)
-            alertController.addAction(UIAlertAction(title: "Okay", style: .default))
+        let userDetailsView = UserDetailsView()
+        self.navigationController?.pushViewController(userDetailsView, animated: true)
 
-            self.present(alertController, animated: true, completion: nil)
-    }
     
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if(indexPath + 2 == pullRequestsList.count){
+            //load next page
+            
+        }
+    }
     
 }
 
@@ -236,15 +218,29 @@ class PullRequestsTableViewCell : UITableViewCell {
     }
 }
 
-
-
+}
 
 extension PullRequestsView : PullRequestsViewModelDelegate {
     func showLoader(_ show: Bool) {
-        showLoadingIndicator()
+        print("show loader in view called \(show)")
+        if(show){
+            showLoadingIndicator()
+        }
+            
+        else{
+            stopLoadindIndicator()
+            self.view.addSubview(self.pullRequestTableView)
+            self.pullRequestTableView.dataSource = self
+            self.pullRequestTableView.delegate = self
+            self.pullRequestTableView.register(PullRequestsTableViewCell.self, forCellReuseIdentifier: StringConstants.pullRequestsCellIdentifier.rawValue)
+            self.pullRequestTableView.snp.makeConstraints{
+                make in
+                make.top.equalTo(self.screenHeadingLabel.snp.bottom)
+                make.leading.trailing.bottom.equalToSuperview()
+            }
+        }
     }
-    
-    func loadData(_ response: PullRequestsModel) {
+    func loadData(_ response: [PullRequestItem]) {
         self.pullRequestsList = response
         pullRequestTableView.reloadData()
     }
@@ -262,6 +258,4 @@ extension PullRequestsView : PullRequestsViewModelDelegate {
                 self.present(alert, animated: true, completion: nil)
             
     }
-    
-    
 }

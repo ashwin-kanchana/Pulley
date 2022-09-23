@@ -10,46 +10,65 @@ import Foundation
 
 protocol PullRequestsViewModelDelegate : AnyObject {
     func showLoader(_ show : Bool)
-    func loadData(_ response: PullRequestsModel)
+    func loadData(_ response: [PullRequestItem])
     func showError(_ errorMessage: String)
+
 }
 
 
 class PullRequestsViewModel {
-    weak var delegate: PullRequestsViewModelDelegate?
+    weak var pullRequestsDelegate: PullRequestsViewModelDelegate?
     
     private var currentPage = 1
-    private let itemsPerPage = 10
+    private var itemsPerPage = 10
     
-    
+    private var pullRequestsList: PullRequestsModel!
 
     
     func viewDidLoad(){
-        delegate?.showLoader(true)
-        
-        
-        if let response = FileManager.loadJson(filename: "sample"){
-            print("response items count: \(String(describing: response.items.count))")
-            delegate?.showLoader(false)
-            delegate?.loadData(response)
-        }
-        else{
-            delegate?.showLoader(false)
-            delegate?.showError("Something went wrong!")
-        }
-        
+        pullRequestsDelegate?.showLoader(true)
+        loadFromAPI()
+    }
+    
+    func loadNextPage(){
+        currentPage += 1
         
     }
     
     
-    private func getPullRequestsFromApi(){
-        let url = URL(string: "\(APIConstants.pullRequestsURL.rawValue)\(APIConstants.pageQueryParam.rawValue)\(currentPage)\(APIConstants.perPageQyeryParam)\(itemsPerPage)")!
+    func loadFromAPI(){
+        let url = "\(APIConstants.pullRequestsURL.rawValue)\(APIConstants.pageQueryParam.rawValue)\(currentPage)\(APIConstants.perPageQyeryParam.rawValue)\(itemsPerPage)"
 
-        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
-            guard let data = data else { return }
-            print(String(data: data, encoding: .utf8)!)
+        guard let url = URL(string: url) else{
+            return
         }
+        print(url)
+        URLSession.shared.dataTask(with: url) { (data, res, err) in
 
-        task.resume()
+            guard let data = data else {
+                  return
+            }
+
+            do {
+                print(data)
+                let json = try JSONDecoder().decode([PullRequestItem].self, from: data)
+                print(json)
+                //self.pullRequestsList = json
+                print("data loaded from api in viewModel")
+                DispatchQueue.main.async {
+                    self.pullRequestsDelegate?.loadData(json)
+                    self.pullRequestsDelegate?.showLoader(false)
+                }
+                
+            } catch {
+                print("network Error info: \(error)")
+                DispatchQueue.main.async {
+                    self.pullRequestsDelegate?.showLoader(false)
+                    self.pullRequestsDelegate?.showError("Something went wrong!")
+                }
+                
+            }
+
+        }.resume()
     }
 }

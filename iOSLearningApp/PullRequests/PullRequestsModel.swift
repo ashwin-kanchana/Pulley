@@ -15,7 +15,7 @@ struct PullRequestItem : Decodable {
     let id : Int64
     let title : String
     let user : User
-    let body : String
+    let body : String?
 }
 
 
