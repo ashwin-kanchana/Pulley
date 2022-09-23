@@ -88,19 +88,25 @@ extension PullRequestsView : UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let item = pullRequestsList.items[indexPath.row]
         print("clicked \(indexPath.row)")
-        let userDetailsView = UserDetailsView()
-        self.navigationController?.pushViewController(userDetailsView, animated: true)
+        let vc = UserDetailsView()
+        self.navigationController?.pushViewController(vc,animated:true)
+    }
 
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if(indexPath + 2 == pullRequestsList.count){
+        if(indexPath.row + 2 == pullRequestsList.count){
             //load next page
-            
+            pullRequestViewModel.loadNextPage()
         }
     }
+    
+}
+
+class PaginationLoadingTableViewCell: UITableViewCell{
     
 }
 
@@ -218,8 +224,6 @@ class PullRequestsTableViewCell : UITableViewCell {
     }
 }
 
-}
-
 extension PullRequestsView : PullRequestsViewModelDelegate {
     func showLoader(_ show: Bool) {
         print("show loader in view called \(show)")
@@ -241,7 +245,7 @@ extension PullRequestsView : PullRequestsViewModelDelegate {
         }
     }
     func loadData(_ response: [PullRequestItem]) {
-        self.pullRequestsList = response
+        self.pullRequestsList.append(contentsOf: response)
         pullRequestTableView.reloadData()
     }
     
