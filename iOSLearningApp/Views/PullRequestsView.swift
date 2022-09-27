@@ -11,12 +11,12 @@ import SnapKit
 class PullRequestsView: UIViewController {
     
     private let screenHeadingLabel = UILabel()
-    private let  pullRequestTableView = UITableView()
+    private let pullRequestTableView = UITableView()
     private let loadingContainerView = UIView()
     private let activityIndicator = UIActivityIndicatorView()
     private var pullRequestsList: [PullRequestItem] = []
     private let pullRequestViewModel = PullRequestsViewModel()
-
+    
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -28,7 +28,14 @@ class PullRequestsView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationController?.navigationBar.tintColor = UIColor.black
+        
+        //temp
+        let userDetailsView = UserDetailsView(username: "al45tair")
+        self.navigationController?.pushViewController(userDetailsView,animated:true)
+        //temp
+        
         pullRequestViewModel.pullRequestsDelegate = self
         pullRequestViewModel.viewDidLoad()
         
@@ -46,7 +53,7 @@ class PullRequestsView: UIViewController {
             make in
             make.top.equalToSuperview().offset(60)
             make.leading.equalToSuperview().offset(10)
-
+            
         }
     }
     
@@ -72,43 +79,70 @@ class PullRequestsView: UIViewController {
         activityIndicator.stopAnimating()
         activityIndicator.removeFromSuperview()
     }
-
+    
 }
 
 
 
 extension PullRequestsView : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pullRequestsList.count
+        return pullRequestsList.count + 1
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StringConstants.pullRequestsCellIdentifier.rawValue) as! PullRequestsTableViewCell
-        let item = pullRequestsList[indexPath.row]
-        cell.setPullRequestTableCellData(item: item)
-        return cell
+        
+        if(indexPath.row + 1 == pullRequestsList.count){
+            return tableView.dequeueReusableCell(withIdentifier: StringConstants.loadingCellIdentifier.rawValue) as! LoadingTableViewCell
+        } else{
+            let item = pullRequestsList[indexPath.row]
+            cell.setPullRequestTableCellData(item: item)
+            return cell
+        }
+        
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let item = pullRequestsList.items[indexPath.row]
-        print("clicked \(indexPath.row)")
-        let vc = UserDetailsView()
-        self.navigationController?.pushViewController(vc,animated:true)
+        let userDetailsView = UserDetailsView(username: pullRequestsList[indexPath.row].user.login)
+        self.navigationController?.pushViewController(userDetailsView,animated:true)
     }
-
+    
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if(indexPath.row + 2 == pullRequestsList.count){
-            //load next page
             pullRequestViewModel.loadNextPage()
         }
     }
     
 }
 
-class PaginationLoadingTableViewCell: UITableViewCell{
+class LoadingTableViewCell: UITableViewCell {
+    let loadingFooterContainerView = UIView()
+    let paginationIndicatorView = UIActivityIndicatorView()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        contentView.addSubview(loadingFooterContainerView)
+        loadingFooterContainerView.snp.makeConstraints({
+            make in
+            make.top.bottom.leading.trailing.equalToSuperview()
+        })
+        loadingFooterContainerView.addSubview(paginationIndicatorView)
+        paginationIndicatorView.snp.makeConstraints{
+            make in
+            make.centerY.centerX.equalToSuperview()
+        }
+        paginationIndicatorView.startAnimating()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
 }
+
 
 class PullRequestsTableViewCell : UITableViewCell {
     
@@ -117,7 +151,8 @@ class PullRequestsTableViewCell : UITableViewCell {
     private let subTitleLabel = UILabel()
     private let bodyLabel = UILabel()
     private let avatarImageView = UIImageView()
-    
+    private let favoriteToggleButton = UIButton(type: UIButton.ButtonType.custom)
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -128,12 +163,13 @@ class PullRequestsTableViewCell : UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-   
+    
     private func setupViewsInCell(){
         setupContainerView()
         setupAvatarImageView()
         setupTitleLabelView()
         setupSubTitleLabelView()
+        setupFavoriteToggleButton()
         setupBodyLabelView()
     }
     
@@ -147,7 +183,6 @@ class PullRequestsTableViewCell : UITableViewCell {
             make in
             make.leading.trailing.top.bottom.equalToSuperview().inset(8)
         }
-        
     }
     
     private func setupAvatarImageView(){
@@ -158,9 +193,8 @@ class PullRequestsTableViewCell : UITableViewCell {
             make in
             make.leading.top.equalToSuperview().offset(10)
             make.height.width.equalTo(70)
+            make.bottom.lessThanOrEqualToSuperview().offset(-12).priority(.required)
             // make.centerY.equalToSuperview()
-            
-           
         }
     }
     
@@ -190,6 +224,18 @@ class PullRequestsTableViewCell : UITableViewCell {
         }
     }
     
+    private func setupFavoriteToggleButton(){
+        containerView.addSubview(favoriteToggleButton)
+        favoriteToggleButton.setImage(UIImage(named: StringConstants.favoriteAssetName.rawValue), for: .normal)
+        favoriteToggleButton.snp.makeConstraints{
+            make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-10)
+        }
+        
+        favoriteToggleButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+    }
+    
     private func setupBodyLabelView(){
         containerView.addSubview(bodyLabel)
         bodyLabel.textColor = .darkGray
@@ -199,7 +245,9 @@ class PullRequestsTableViewCell : UITableViewCell {
             make in
             make.top.equalTo(subTitleLabel.snp.bottom).offset(5)
             make.leading.equalTo(avatarImageView.snp.trailing).offset(10)
-            make.bottom.trailing.equalToSuperview().offset(-10)
+            make.trailing.equalTo(favoriteToggleButton.snp.leading).offset(-8)
+            make.bottom.equalToSuperview().offset(-10).priority(.low)
+            
         }
         
     }
@@ -212,31 +260,31 @@ class PullRequestsTableViewCell : UITableViewCell {
         avatarImageView.image = UIImage(named: item.user.login)
         URLSession.shared.dataTask(with: NSURL(string: item.user.avatar_url )! as URL, completionHandler: {
             (data, response, error) -> Void in
-                if error != nil {
-                    print(error ?? "error")
-                    return
-                }
-                DispatchQueue.main.async(execute: { () -> Void in
-                    let image = UIImage(data: data!)
-                    self.avatarImageView.image = image
-                })
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.avatarImageView.image = image
+            })
         }).resume()
     }
 }
 
 extension PullRequestsView : PullRequestsViewModelDelegate {
     func showLoader(_ show: Bool) {
-        print("show loader in view called \(show)")
         if(show){
             showLoadingIndicator()
         }
-            
         else{
             stopLoadindIndicator()
             self.view.addSubview(self.pullRequestTableView)
+            self.pullRequestTableView.separatorColor = UIColor.clear
             self.pullRequestTableView.dataSource = self
             self.pullRequestTableView.delegate = self
             self.pullRequestTableView.register(PullRequestsTableViewCell.self, forCellReuseIdentifier: StringConstants.pullRequestsCellIdentifier.rawValue)
+            self.pullRequestTableView.register(LoadingTableViewCell.self, forCellReuseIdentifier: StringConstants.loadingCellIdentifier.rawValue)
             self.pullRequestTableView.snp.makeConstraints{
                 make in
                 make.top.equalTo(self.screenHeadingLabel.snp.bottom)
@@ -252,14 +300,14 @@ extension PullRequestsView : PullRequestsViewModelDelegate {
     func showError(_ errorMessage: String) {
         stopLoadindIndicator()
         let alert = UIAlertController(title: "Error",
-                message: errorMessage,
-                preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(
-                    UIAlertAction(title: "Dismiss",
-                                  style: UIAlertAction.Style.default) {
-                (result: UIAlertAction) -> Void in
-                })
-                self.present(alert, animated: true, completion: nil)
-            
+                                      message: errorMessage,
+                                      preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(
+            UIAlertAction(title: "Dismiss",
+                          style: UIAlertAction.Style.default) {
+                              (result: UIAlertAction) -> Void in
+                          })
+        self.present(alert, animated: true, completion: nil)
+        
     }
 }

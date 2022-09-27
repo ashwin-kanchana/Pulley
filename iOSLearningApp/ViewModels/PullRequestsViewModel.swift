@@ -12,7 +12,6 @@ protocol PullRequestsViewModelDelegate : AnyObject {
     func showLoader(_ show : Bool)
     func loadData(_ response: [PullRequestItem])
     func showError(_ errorMessage: String)
-
 }
 
 
@@ -38,8 +37,8 @@ class PullRequestsViewModel {
    
     func loadFromAPI(){
         NetworkManager.shared.fetchData(PullRequestAPI(pageNumber: pageNumber)) { (items: [PullRequestItem]?) in
-            if(items != nil){
-                self.pullRequestsDelegate?.loadData(items ?? [])
+            if let items = items {
+                self.pullRequestsDelegate?.loadData(items)
                 self.pullRequestsDelegate?.showLoader(false)
             }
             else{
