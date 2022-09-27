@@ -23,6 +23,11 @@ extension String {
         case favoriteUserDefaultsKeyPrefix = "__fav__"
         case notificationDataKey = "username"
         case newState = "newState"
+        case unSaveConfirmationMessage = "Remove from storage"
+        case unFavoriteConfirmationMessage = "Remove from favorites"
+        case areYouSureMessage = "Are you sure?"
+        case cancelAction = "Cancel"
+        case confirmAction = "Confirm"
     }
 }
 

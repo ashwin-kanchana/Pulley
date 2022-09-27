@@ -59,20 +59,20 @@ class PullRequestsViewModel {
     
     @objc
     func addFavoriteNotification(notification: Notification){
-        let userInfo = notification.userInfo
-        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+//        let userInfo = notification.userInfo
+//        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
             pullRequestsList = refreshFavoritesStateForList(pullRequestsList)
             self.pullRequestsDelegate?.loadData()
-        }
+//        }
     }
     
     @objc
     func removeFavoriteNotification(notification: Notification){
-        let userInfo = notification.userInfo
-        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+//        let userInfo = notification.userInfo
+//        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
             pullRequestsList = refreshFavoritesStateForList(pullRequestsList)
             self.pullRequestsDelegate?.loadData()
-        }
+//        }
     }
     
     func viewDidLoad(){
