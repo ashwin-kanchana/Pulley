@@ -10,21 +10,73 @@ import Foundation
 
 protocol PullRequestsViewModelDelegate : AnyObject {
     func showLoader(_ show : Bool)
-    func loadData(_ response: [PullRequestItem])
+    func loadData()
     func showError(_ errorMessage: String)
+    func toggleFavorite(_ username: String)
 }
 
 
+
+
 class PullRequestsViewModel {
+    static let shared = PullRequestsViewModel()
+    
+    private init (){}
+    
     weak var pullRequestsDelegate: PullRequestsViewModelDelegate?
     
     var pageNumber = 1
     var pageSize = 10
+    private var initialLoad = true
+    var pullRequestsList: [PullRequestTableCellItem] = []
     
-    private var pullRequestsList: [PullRequestItem] = []
+    deinit{
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func createNotificationObservers(){
+        NotificationCenter.default.addObserver(self, selector: #selector(addFavoriteNotification), name: Notification.Name(.Constants.favoriteUserNotificationKey.rawValue), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(removeFavoriteNotification), name: Notification.Name(.Constants.unFavoriteUserNotificationKey.rawValue), object: nil)
+    }
 
     
+    func toggleFavorite(_ username: String){
+        print("toggle fav \(username)")
+        UserDefaultsManager.shared.toggleFavoriteUser(username) { [self]
+            newState in
+            
+            if let row = self.pullRequestsList.firstIndex(where: {$0.user.login == username}) {
+                print("before \(pullRequestsList[row].user)")
+                pullRequestsList[row].user.isFavorite = newState
+                print("after \(pullRequestsList[row].user)")
+            }
+            
+            self.pullRequestsDelegate?.loadData()
+        }
+        
+    }
+    
+    @objc
+    func addFavoriteNotification(notification: Notification){
+        let userInfo = notification.userInfo
+        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+            pullRequestsList = refreshFavoritesStateForList(pullRequestsList)
+            self.pullRequestsDelegate?.loadData()
+        }
+    }
+    
+    @objc
+    func removeFavoriteNotification(notification: Notification){
+        let userInfo = notification.userInfo
+        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+            pullRequestsList = refreshFavoritesStateForList(pullRequestsList)
+            self.pullRequestsDelegate?.loadData()
+        }
+    }
+    
     func viewDidLoad(){
+        createNotificationObservers()
         pullRequestsDelegate?.showLoader(true)
         loadFromAPI()
     }
@@ -34,19 +86,65 @@ class PullRequestsViewModel {
         loadFromAPI()
     }
     
+    func refreshFavoritesStateForList(_ items: [PullRequestTableCellItem]) -> [PullRequestTableCellItem]{
+        var processedList: [PullRequestTableCellItem] = []
+        for item in items {
+            let key = UserDefaultsManager.shared.generateKeyForFavoriteUser(item.user.login)
+            let isUserFavorite = UserDefaultsManager.shared.checkIfExists(key)
+            let tableCellUser = TableCellUser(
+                login: item.user.login,
+                avatar_url: item.user.avatar_url,
+                isFavorite: isUserFavorite)
+            let processedItem = PullRequestTableCellItem(
+                id: item.id,
+                title: item.title,
+                user: tableCellUser,
+                body: item.body)
+            processedList.append(processedItem)
+        }
+        return processedList
+    }
+    
+    func preProcessFavoritesStateForList(_ items: [PullRequestItem]) -> [PullRequestTableCellItem]{
+        var processedList: [PullRequestTableCellItem] = []
+        for item in items {
+            let key = UserDefaultsManager.shared.generateKeyForFavoriteUser(item.user.login)
+            let isUserFavorite = UserDefaultsManager.shared.checkIfExists(key)
+            let tableCellUser = TableCellUser(
+                login: item.user.login,
+                avatar_url: item.user.avatar_url,
+                isFavorite: isUserFavorite)
+            let processedItem = PullRequestTableCellItem(
+                id: item.id,
+                title: item.title,
+                user: tableCellUser,
+                body: item.body)
+            processedList.append(processedItem)
+        }
+        return processedList
+    }
    
     func loadFromAPI(){
-        NetworkManager.shared.fetchData(PullRequestAPI(pageNumber: pageNumber)) { (items: [PullRequestItem]?) in
+        NetworkManager.shared.fetchData(PullRequestAPI(pageNumber: pageNumber)) { [self] (items: [PullRequestItem]?) in
             if let items = items {
-                self.pullRequestsDelegate?.loadData(items)
-                self.pullRequestsDelegate?.showLoader(false)
+                self.pullRequestsList.append(contentsOf: preProcessFavoritesStateForList(items))
+                self.pullRequestsDelegate?.loadData()
+                if self.initialLoad {
+                    self.pullRequestsDelegate?.showLoader(false)
+                    self.initialLoad = false
+                }
             }
             else{
                 self.pullRequestsDelegate?.showLoader(false)
-                self.pullRequestsDelegate?.showError("Something went wrong")
+                self.pullRequestsDelegate?.showError(.Constants.defaultErrorMessage.rawValue)
             }
         }
     }
+    func checkFavoriteUser(_ username: String) -> Bool{
+        let key = UserDefaultsManager.shared.generateKeyForFavoriteUser(username)
+        return UserDefaultsManager.shared.checkIfExists(key)
+    }
+    
 }
 
 

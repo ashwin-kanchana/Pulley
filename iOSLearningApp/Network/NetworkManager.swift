@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 
 class NetworkManager {
@@ -15,7 +16,6 @@ class NetworkManager {
     
     
     func fetchData<T:Decodable>(_ api: API, completionHandler: @escaping (T?) -> Void){
-        
         var urlQueryItems: [URLQueryItem] = []
         if let queryParams = api.queryParams {
             queryParams.forEach{
@@ -24,7 +24,6 @@ class NetworkManager {
                 urlQueryItems.append(urlQueryItem)
             }
         }
-        
         var components = URLComponents()
         components.scheme = APIConstants.httpsScheme.rawValue
         components.host = api.baseUrl
@@ -56,6 +55,18 @@ class NetworkManager {
                 completionHandler(nil)
             }
             
+        }).resume()
+    }
+    
+    func fetchImage(_ url: String, completionHandler: @escaping (_ image: UIImage?) ->Void){
+        URLSession.shared.dataTask(with: NSURL(string: url )! as URL, completionHandler: {
+            (data, response, error) -> Void in
+            if error != nil {
+                print(error ?? "error")
+                return
+            }
+            let image = UIImage(data: data!)
+            completionHandler(image)
         }).resume()
     }
 }

@@ -13,16 +13,22 @@ protocol UserDetailsViewModelDelegate : AnyObject {
     func showLoader(_ show : Bool)
     func loadData(_ userDetails: UserDetails, _ userDetailList: [UserDetailsListItem])
     func showError(_ errorMessage: String)
+    func toggleFavorite(_ newState: Bool)
+    func toggleSave(_ newState: Bool)
 }
 
 
 class UserDetailsViewModel {
-    
     weak var userDetailsDelegate: UserDetailsViewModelDelegate?
     private let username: String
     
+    var isUserSaved: Bool
+    var isUserFavorited: Bool
+    
     init(username: String) {
         self.username = username
+        self.isUserSaved = UserDefaultsManager.shared.checkIfExists(username)
+        self.isUserFavorited = UserDefaultsManager.shared.checkIfExists(UserDefaultsManager.shared.generateKeyForFavoriteUser(username))
     }
     
     required init?(coder: NSCoder) {
@@ -32,20 +38,32 @@ class UserDetailsViewModel {
     
     func viewDidLoad(){
         userDetailsDelegate?.showLoader(true)
-        loadFromAPI()
+        if(UserDefaultsManager.shared.checkIfExists(username)){
+            UserDefaultsManager.shared.getData(username) { [self]
+                userDetails in
+                guard let userDetails = userDetails else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.userDetailsDelegate?.loadData(userDetails, self.makeUserDetailListFromObject(userDetails))
+                    self.userDetailsDelegate?.showLoader(false)
+                }
+            }
+        }
+        else{
+            loadFromAPI()
+        }
     }
-    
     
     func loadFromAPI(){
         NetworkManager.shared.fetchData(UserDetailsAPI(username: username)) { (userDetails: UserDetails?) in
             if let userDetails = userDetails {
                 self.userDetailsDelegate?.loadData(userDetails, self.makeUserDetailListFromObject(userDetails))
                 self.userDetailsDelegate?.showLoader(false)
-                
             }
             else{
                 self.userDetailsDelegate?.showLoader(false)
-                self.userDetailsDelegate?.showError("Something went wrong")
+                self.userDetailsDelegate?.showError(.Constants.defaultErrorMessage.rawValue)
             }
         }
     }
@@ -71,6 +89,29 @@ class UserDetailsViewModel {
         }
         return userDetailsList
     }
+    
+    
+    func toggleSaveUser(_ username: String, _ userDetails: UserDetails?){
+        UserDefaultsManager.shared.toggleUserSave(username, userDetails){ [self]
+            newState in
+            isUserSaved = newState
+            self.userDetailsDelegate?.toggleSave(newState)
+        }
+    }
+    
+    func toggleFavoriteUser(_ username: String){
+        UserDefaultsManager.shared.toggleFavoriteUser(username){
+            newState in
+            self.isUserFavorited = newState
+            self.userDetailsDelegate?.toggleFavorite(newState)
+            let notificationName = newState ? String.Constants.favoriteUserNotificationKey.rawValue :
+                String.Constants.unFavoriteUserNotificationKey.rawValue
+            let customData = [String.Constants.notificationDataKey.rawValue: username] 
+            NotificationCenter.default.post(name: Notification.Name(notificationName), object: nil, userInfo: customData)
+        }
+        
+    }
+    
 }
 
 

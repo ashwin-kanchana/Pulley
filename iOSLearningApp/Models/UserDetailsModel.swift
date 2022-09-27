@@ -5,7 +5,7 @@
 //  Created by Ashwin K on 22/09/22.
 //
 
-struct UserDetails : Decodable {
+struct UserDetails : Codable {
     let type :  String?
     let login:  String
     let avatar_url: String
@@ -23,7 +23,7 @@ struct UserDetails : Decodable {
 }
 
 
-struct UserDetailsListItem: Decodable {
+struct UserDetailsListItem: Codable {
     let key: String
     let labelName: String
     let value: String

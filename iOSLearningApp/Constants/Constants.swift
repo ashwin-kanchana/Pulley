@@ -6,19 +6,38 @@
 //
 
 import Foundation
+import UIKit
 
-enum StringConstants : String {
-    case pullRequestsLabelValue = "Pull Requests"
-    case pullRequestsCellIdentifier = "PullRequestsCellIdentifier"
-    case loadingCellIdentifier = "loadingCellIdentifier"
-    case userDetailsCellIdentifier = "userDetailsCellIdentifier"
-    case sampleJsonFileName = "sample"
-    case followersHelperLabelValue = "Followers"
-    case followingHelperLabelValue = "Following"
-    case saveAssetName = "save"
-    case unsaveAssetName = "unsave"
-    case favoriteAssetName = "fav"
-    case unFavoriteAssetName = "unfav"
+
+extension String {
+    
+    enum Constants: String {
+        case pullRequest = "Pull Requests"
+        case followersHelperLabelValue = "Followers"
+        case followingHelperLabelValue = "Following"
+        case pullRequestsCellIdentifier = "PullRequestsCellIdentifier"
+        case userDetailsCellIdentifier = "userDetailsCellIdentifier"
+        case defaultErrorMessage = "Something went wrong"
+        case favoriteUserNotificationKey = "favoriteUserNotificationKey"
+        case unFavoriteUserNotificationKey = "unFavoriteUserNotificationKey"
+        case favoriteUserDefaultsKeyPrefix = "__fav__"
+        case notificationDataKey = "username"
+        case newState = "newState"
+    }
+}
+
+extension UIImage {
+    
+    enum Assets: String {
+        case save
+        case unsave
+        case fav
+        case unfav
+        
+        var image: UIImage? {
+            return UIImage(named: self.rawValue)
+        }
+    }
 }
 
 
