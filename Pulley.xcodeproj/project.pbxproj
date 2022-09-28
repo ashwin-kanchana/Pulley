@@ -30,7 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		060CA8D8285228E50053196E /* iOSLearningApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSLearningApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		060CA8D8285228E50053196E /* Pulley.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pulley.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		060CA8DB285228E50053196E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		060CA8DD285228E50053196E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		060CA8DF285228E50053196E /* PullRequestsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestsViewController.swift; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		060CA8D9285228E50053196E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				060CA8D8285228E50053196E /* iOSLearningApp.app */,
+				060CA8D8285228E50053196E /* Pulley.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,9 +159,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		060CA8D7285228E50053196E /* iOSLearningApp */ = {
+		060CA8D7285228E50053196E /* Pulley */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 060CA8EC285228E70053196E /* Build configuration list for PBXNativeTarget "iOSLearningApp" */;
+			buildConfigurationList = 060CA8EC285228E70053196E /* Build configuration list for PBXNativeTarget "Pulley" */;
 			buildPhases = (
 				060CA8D4285228E50053196E /* Sources */,
 				060CA8D5285228E50053196E /* Frameworks */,
@@ -171,12 +171,12 @@
 			);
 			dependencies = (
 			);
-			name = iOSLearningApp;
+			name = Pulley;
 			packageProductDependencies = (
 				0652EE8F28CB37FB00470050 /* SnapKit */,
 			);
 			productName = iOSLearningApp;
-			productReference = 060CA8D8285228E50053196E /* iOSLearningApp.app */;
+			productReference = 060CA8D8285228E50053196E /* Pulley.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -194,7 +194,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 060CA8D3285228E50053196E /* Build configuration list for PBXProject "iOSLearningApp" */;
+			buildConfigurationList = 060CA8D3285228E50053196E /* Build configuration list for PBXProject "Pulley" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -211,7 +211,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				060CA8D7285228E50053196E /* iOSLearningApp */,
+				060CA8D7285228E50053196E /* Pulley */,
 			);
 		};
 /* End PBXProject section */
@@ -440,7 +440,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		060CA8D3285228E50053196E /* Build configuration list for PBXProject "iOSLearningApp" */ = {
+		060CA8D3285228E50053196E /* Build configuration list for PBXProject "Pulley" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				060CA8EA285228E70053196E /* Debug */,
@@ -449,7 +449,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		060CA8EC285228E70053196E /* Build configuration list for PBXNativeTarget "iOSLearningApp" */ = {
+		060CA8EC285228E70053196E /* Build configuration list for PBXNativeTarget "Pulley" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				060CA8ED285228E70053196E /* Debug */,
