@@ -128,7 +128,6 @@ class PullRequestsTableViewCell : UITableViewCell {
         guard let favoriteClickedUsername = favoriteClickedUsername else {
             return
         }
-        print(favoriteClickedUsername)
         pullRequestViewModel.toggleFavorite(favoriteClickedUsername)
     }
     

@@ -13,6 +13,7 @@
 		060CA8E5285228E70053196E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 060CA8E4285228E70053196E /* Assets.xcassets */; };
 		060CA8E8285228E70053196E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 060CA8E6285228E70053196E /* LaunchScreen.storyboard */; };
 		0652EE9028CB37FB00470050 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 0652EE8F28CB37FB00470050 /* SnapKit */; };
+		4D0444D228E402180034240F /* UserDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0444D128E402180034240F /* UserDetailsHeaderView.swift */; };
 		4D43C2AF28E2BA1A00E6B531 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D43C2AE28E2BA1A00E6B531 /* UserDefaultsManager.swift */; };
 		4D43C2B128E3016A00E6B531 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D43C2B028E3016A00E6B531 /* LoadingView.swift */; };
 		4D43C2B328E30C2600E6B531 /* PullRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D43C2B228E30C2600E6B531 /* PullRequestsTableViewCell.swift */; };
@@ -36,6 +37,7 @@
 		060CA8E4285228E70053196E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		060CA8E7285228E70053196E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		060CA8E9285228E70053196E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D0444D128E402180034240F /* UserDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsHeaderView.swift; sourceTree = "<group>"; };
 		4D43C2AE28E2BA1A00E6B531 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		4D43C2B028E3016A00E6B531 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		4D43C2B228E30C2600E6B531 /* PullRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestsTableViewCell.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				060CA8DF285228E50053196E /* PullRequestsViewController.swift */,
 				4D43C2B028E3016A00E6B531 /* LoadingView.swift */,
 				4D43C2B228E30C2600E6B531 /* PullRequestsTableViewCell.swift */,
+				4D0444D128E402180034240F /* UserDetailsHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D0444D228E402180034240F /* UserDetailsHeaderView.swift in Sources */,
 				4D5AD43928DCDAF9006EAC20 /* UserDetailsViewController.swift in Sources */,
 				060CA8E0285228E50053196E /* PullRequestsViewController.swift in Sources */,
 				060CA8DC285228E50053196E /* AppDelegate.swift in Sources */,
@@ -384,8 +388,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZC4CHKWB3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOSLearningApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Pulley;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -395,7 +401,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gonavi.app.iOSLearningApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gonavi.app.pulley;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -410,8 +416,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5ZC4CHKWB3;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = iOSLearningApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Pulley;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -421,7 +429,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.gonavi.app.iOSLearningApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gonavi.app.pulley;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

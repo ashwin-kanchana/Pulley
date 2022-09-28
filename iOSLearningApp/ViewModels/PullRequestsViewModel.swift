@@ -42,15 +42,16 @@ class PullRequestsViewModel {
 
     
     func toggleFavorite(_ username: String){
-        print("toggle fav \(username)")
         UserDefaultsManager.shared.toggleFavoriteUser(username) { [self]
             newState in
             
             if let row = self.pullRequestsList.firstIndex(where: {$0.user.login == username}) {
-                print("before \(pullRequestsList[row].user)")
                 pullRequestsList[row].user.isFavorite = newState
-                print("after \(pullRequestsList[row].user)")
             }
+            
+            // iterating because of duplicate items in list
+            pullRequestsList = refreshFavoritesStateForList(pullRequestsList, username)
+            
             
             self.pullRequestsDelegate?.loadData()
         }
@@ -59,20 +60,20 @@ class PullRequestsViewModel {
     
     @objc
     func addFavoriteNotification(notification: Notification){
-//        let userInfo = notification.userInfo
-//        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
-            pullRequestsList = refreshFavoritesStateForList(pullRequestsList)
+        let userInfo = notification.userInfo
+        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+            pullRequestsList = refreshFavoritesStateForList(pullRequestsList, username)
             self.pullRequestsDelegate?.loadData()
-//        }
+        }
     }
     
     @objc
     func removeFavoriteNotification(notification: Notification){
-//        let userInfo = notification.userInfo
-//        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
-            pullRequestsList = refreshFavoritesStateForList(pullRequestsList)
+        let userInfo = notification.userInfo
+        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+            pullRequestsList = refreshFavoritesStateForList(pullRequestsList, username)
             self.pullRequestsDelegate?.loadData()
-//        }
+        }
     }
     
     func viewDidLoad(){
@@ -86,7 +87,9 @@ class PullRequestsViewModel {
         loadFromAPI()
     }
     
-    func refreshFavoritesStateForList(_ items: [PullRequestTableCellItem]) -> [PullRequestTableCellItem]{
+    func refreshFavoritesStateForList(_ items: [PullRequestTableCellItem], _ username: String) -> [PullRequestTableCellItem]{
+        
+        // MARK: optimize by filtering list with target username
         var processedList: [PullRequestTableCellItem] = []
         for item in items {
             let key = UserDefaultsManager.shared.generateKeyForFavoriteUser(item.user.login)
@@ -125,7 +128,7 @@ class PullRequestsViewModel {
     }
    
     func loadFromAPI(){
-        NetworkManager.shared.fetchData(PullRequestAPI(pageNumber: pageNumber)) { [self] (items: [PullRequestItem]?) in
+        NetworkManager.shared.fetchData(PullRequestAPI(pageNumber: pageNumber, pageSize: pageSize)) { [self] (items: [PullRequestItem]?) in
             if let items = items {
                 self.pullRequestsList.append(contentsOf: preProcessFavoritesStateForList(items))
                 self.pullRequestsDelegate?.loadData()
@@ -151,14 +154,14 @@ class PullRequestsViewModel {
 
 struct PullRequestAPI: API {
     let pageNumber: Int
-    let pageSize: Int = 10
+    let pageSize: Int
     
     var path: String {
         return APIConstants.pullRequestsPath.rawValue
     }
     
     var queryParams: [String : String]? {
-        return ["page" : String(pageNumber), "per_page": String(pageSize)]
+        return [APIConstants.pageQueryParam.rawValue : String(pageNumber), APIConstants.perPageQyeryParam.rawValue: String(pageSize)]
     }
     
     var headers: [String : String]?

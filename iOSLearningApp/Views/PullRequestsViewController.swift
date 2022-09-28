@@ -119,11 +119,6 @@ extension PullRequestsViewController : UITableViewDataSource, UITableViewDelegat
     
 }
 
-//extension PullRequestsViewController : PullRequestTableViewCellDelegate {
-//    func didTapFavoriteButton(username: String) {
-//        print(username)
-//    }
-//}
 
 
 

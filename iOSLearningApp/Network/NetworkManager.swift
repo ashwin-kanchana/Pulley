@@ -61,9 +61,8 @@ class NetworkManager {
     func fetchImage(_ url: String, completionHandler: @escaping (_ image: UIImage?) ->Void){
         URLSession.shared.dataTask(with: NSURL(string: url )! as URL, completionHandler: {
             (data, response, error) -> Void in
-            if error != nil {
-                print(error ?? "error")
-                return
+            if let error = error {
+                print(error)
             }
             let image = UIImage(data: data!)
             completionHandler(image)
