@@ -28,6 +28,9 @@ extension String {
         case areYouSureMessage = "Are you sure?"
         case cancelAction = "Cancel"
         case confirmAction = "Confirm"
+        case dismissAction = "Dismiss"
+        case errorTitle = "Error"
+        case initMissingError = "init(coder:) has not been implemented"
     }
 }
 

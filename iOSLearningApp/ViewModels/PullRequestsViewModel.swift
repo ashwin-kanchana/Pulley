@@ -19,9 +19,9 @@ protocol PullRequestsViewModelDelegate : AnyObject {
 
 
 class PullRequestsViewModel {
-    static let shared = PullRequestsViewModel()
+    //static let shared = PullRequestsViewModel()
     
-    private init (){}
+    //private init (){}
     
     weak var pullRequestsDelegate: PullRequestsViewModelDelegate?
     

@@ -9,14 +9,12 @@ import UIKit
 import SnapKit
 
 class PullRequestsViewController: UIViewController {
-    
+    private let pullRequestsContainerView = UIView()
     private let screenHeadingLabel = UILabel()
     private let pullRequestTableView = UITableView()
-    private let loadingContainerView = UIView()
-    private let activityIndicator = UIActivityIndicatorView()
-    //private var pullRequestsList: [PullRequestTableCellItem] = []
+    private let loadingView = LoadingView()
     private var showBottomLoader: Bool = false
-    private let pullRequestViewModel = PullRequestsViewModel.shared
+    private let pullRequestViewModel = PullRequestsViewModel()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -24,18 +22,13 @@ class PullRequestsViewController: UIViewController {
     
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(.Constants.initMissingError.rawValue)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.tintColor = UIColor.black
-        
-//        MARK: testing shortcut for 2nd screen
-//        let userDetailsView = UserDetailsView(username: "al45tair")
-//        self.navigationController?.pushViewController(userDetailsView,animated:true)
-        
         
         pullRequestViewModel.pullRequestsDelegate = self
         pullRequestViewModel.viewDidLoad()
@@ -44,39 +37,23 @@ class PullRequestsViewController: UIViewController {
     
     func setupHeadingLabel(){
         screenHeadingLabel.text  = .Constants.pullRequest.rawValue
-        screenHeadingLabel.font = UIFont.boldSystemFont(ofSize: 22.0)
-        view.addSubview(screenHeadingLabel)
+        screenHeadingLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(FloatConstants.pt22.rawValue))
+        view.addSubview(pullRequestsContainerView)
+        view.backgroundColor = .white
+        pullRequestsContainerView.backgroundColor = .white
+        
+        pullRequestsContainerView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.bottom.leading.trailing.equalToSuperview()
+        }
+        pullRequestsContainerView.addSubview(screenHeadingLabel)
         screenHeadingLabel.snp.makeConstraints{
             make in
-            make.top.equalToSuperview().offset(60)
-            make.leading.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(IntConstants.ptN30.rawValue)
+            make.leading.equalToSuperview().offset(IntConstants.pt10.rawValue)
             
         }
     }
-    
-    
-    func showLoadingIndicator(){
-        view.addSubview(loadingContainerView)
-        loadingContainerView.backgroundColor = .white
-        loadingContainerView.snp.makeConstraints{
-            make in
-            make.top.bottom.leading.trailing.equalToSuperview()
-        }
-        loadingContainerView.addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints{
-            make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview()
-        }
-        activityIndicator.style = UIActivityIndicatorView.Style.large
-        activityIndicator.startAnimating()
-    }
-    
-    func stopLoadindIndicator(){
-        activityIndicator.stopAnimating()
-        activityIndicator.removeFromSuperview()
-    }
-    
 }
 
 
@@ -89,7 +66,7 @@ extension PullRequestsViewController : UITableViewDataSource, UITableViewDelegat
         let dataCell = tableView.dequeueReusableCell(withIdentifier: .Constants.pullRequestsCellIdentifier.rawValue) as! PullRequestsTableViewCell
         let item = pullRequestViewModel.pullRequestsList[indexPath.row]
         //dataCell.delegate = self
-        dataCell.setPullRequestTableCellData(item: item)
+        dataCell.setPullRequestTableCellData(item: item, pullRequestViewModel: pullRequestViewModel)
         return dataCell
         
     }
@@ -126,19 +103,22 @@ extension PullRequestsViewController : PullRequestsViewModelDelegate {
     
     func showLoader(_ show: Bool) {
         if(show){
-            showLoadingIndicator()
+            pullRequestsContainerView.addSubview(loadingView)
         }
         else{
-            stopLoadindIndicator()
-            self.view.addSubview(self.pullRequestTableView)
-            self.pullRequestTableView.separatorColor = UIColor.clear
-            self.pullRequestTableView.dataSource = self
-            self.pullRequestTableView.delegate = self
-            self.pullRequestTableView.register(PullRequestsTableViewCell.self, forCellReuseIdentifier: .Constants.pullRequestsCellIdentifier.rawValue)
-            self.pullRequestTableView.snp.makeConstraints{
-                make in
-                make.top.equalTo(self.screenHeadingLabel.snp.bottom)
-                make.leading.trailing.bottom.equalToSuperview()
+            DispatchQueue.main.async {
+                [self] in
+                loadingView.removeFromSuperview()
+                pullRequestsContainerView.addSubview(pullRequestTableView)
+                pullRequestTableView.separatorColor = UIColor.clear
+                pullRequestTableView.dataSource = self
+                pullRequestTableView.delegate = self
+                pullRequestTableView.register(PullRequestsTableViewCell.self, forCellReuseIdentifier: .Constants.pullRequestsCellIdentifier.rawValue)
+                pullRequestTableView.snp.makeConstraints{
+                    make in
+                    make.top.equalTo(screenHeadingLabel.snp.bottom)
+                    make.leading.trailing.bottom.equalToSuperview()
+                }
             }
         }
     }
@@ -147,17 +127,7 @@ extension PullRequestsViewController : PullRequestsViewModelDelegate {
     }
     
     func showError(_ errorMessage: String) {
-        stopLoadindIndicator()
-        let alert = UIAlertController(title: "Error",
-                                      message: errorMessage,
-                                      preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(
-            UIAlertAction(title: "Dismiss",
-                          style: UIAlertAction.Style.default) {
-                              (result: UIAlertAction) -> Void in
-                          })
-        self.present(alert, animated: true, completion: nil)
-        
+        print(errorMessage)
     }
     
     

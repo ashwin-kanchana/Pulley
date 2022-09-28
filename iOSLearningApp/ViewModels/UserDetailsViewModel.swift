@@ -32,7 +32,7 @@ class UserDetailsViewModel {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(.Constants.initMissingError.rawValue)
     }
     
     
@@ -51,7 +51,11 @@ class UserDetailsViewModel {
             }
         }
         else{
-            loadFromAPI()
+            let seconds = 0.5
+            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                self.loadFromAPI()
+            }
+            
         }
     }
     

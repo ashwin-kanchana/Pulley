@@ -20,7 +20,7 @@ class PullRequestsTableViewCell : UITableViewCell {
     private let avatarImageView = UIImageView()
     private let favoriteToggleButton = UIButton()
     private var favoriteClickedUsername: String?
-    private let pullRequestViewModel = PullRequestsViewModel.shared
+    private var pullRequestViewModel: PullRequestsViewModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -29,7 +29,7 @@ class PullRequestsTableViewCell : UITableViewCell {
     
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(.Constants.initMissingError.rawValue)
     }
     
     
@@ -44,10 +44,10 @@ class PullRequestsTableViewCell : UITableViewCell {
     
     private func setupContainerView(){
         self.contentView.addSubview(containerView)
-        containerView.layer.cornerRadius = 10
+        containerView.layer.cornerRadius = CGFloat(FloatConstants.pt10.rawValue)
         containerView.backgroundColor = .white
         containerView.layer.borderColor = UIColor.lightGray.cgColor
-        containerView.layer.borderWidth = 1
+        containerView.layer.borderWidth = CGFloat(FloatConstants.pt1.rawValue)
         containerView.snp.makeConstraints{
             make in
             make.leading.trailing.top.bottom.equalToSuperview().inset(8)
@@ -56,13 +56,13 @@ class PullRequestsTableViewCell : UITableViewCell {
     
     private func setupAvatarImageView(){
         containerView.addSubview(avatarImageView)
-        avatarImageView.layer.cornerRadius = 35
+        avatarImageView.layer.cornerRadius = CGFloat(FloatConstants.pt35.rawValue)
         avatarImageView.clipsToBounds = true
         avatarImageView.snp.makeConstraints{
             make in
-            make.leading.top.equalToSuperview().offset(10)
-            make.height.width.equalTo(70)
-            make.bottom.lessThanOrEqualToSuperview().offset(-12).priority(.required)
+            make.leading.top.equalToSuperview().offset(IntConstants.pt10.rawValue)
+            make.height.width.equalTo(IntConstants.pt70.rawValue)
+            make.bottom.lessThanOrEqualToSuperview().offset(IntConstants.ptN12.rawValue).priority(.required)
             // make.centerY.equalToSuperview()
         }
     }
@@ -72,11 +72,11 @@ class PullRequestsTableViewCell : UITableViewCell {
         containerView.addSubview(titleLabel)
         titleLabel.textColor = .black
         titleLabel.numberOfLines = 1
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 16.0)
+        titleLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(FloatConstants.pt16.rawValue))
         titleLabel.snp.makeConstraints{
             make in
-            make.top.equalToSuperview().offset(10)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(10)
+            make.top.equalToSuperview().offset(IntConstants.pt10.rawValue)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt10.rawValue)
         }
     }
     
@@ -84,7 +84,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         containerView.addSubview(subTitleLabel)
         subTitleLabel.textColor = .black
         subTitleLabel.numberOfLines = 0
-        subTitleLabel.font = subTitleLabel.font.withSize(14)
+        subTitleLabel.font = subTitleLabel.font.withSize(CGFloat(IntConstants.pt14.rawValue))
         subTitleLabel.snp.makeConstraints{
             make in
             make.top.equalTo(titleLabel.snp.bottom).offset(5)
@@ -104,7 +104,10 @@ class PullRequestsTableViewCell : UITableViewCell {
         
         favoriteToggleButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         
-        
+        favoriteToggleButton.snp.makeConstraints{
+            make in
+            make.trailing.equalToSuperview().offset(-10)
+        }
     }
     
     private func setupBodyLabelView(){
@@ -115,7 +118,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         bodyLabel.snp.makeConstraints{
             make in
             make.top.equalTo(subTitleLabel.snp.bottom).offset(5)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(10)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt10.rawValue)
             make.trailing.equalTo(favoriteToggleButton.snp.leading).offset(-8)
             make.bottom.equalToSuperview().offset(-10).priority(.low)
             
@@ -128,10 +131,12 @@ class PullRequestsTableViewCell : UITableViewCell {
         guard let favoriteClickedUsername = favoriteClickedUsername else {
             return
         }
-        pullRequestViewModel.toggleFavorite(favoriteClickedUsername)
+        pullRequestViewModel?.toggleFavorite(favoriteClickedUsername)
     }
     
-    func setPullRequestTableCellData(item: PullRequestTableCellItem){
+    func setPullRequestTableCellData(item: PullRequestTableCellItem, pullRequestViewModel: PullRequestsViewModel){
+        
+        self.pullRequestViewModel = pullRequestViewModel
         titleLabel.text = item.user.login
         subTitleLabel.text = item.title
         bodyLabel.text = item.body
@@ -145,6 +150,10 @@ class PullRequestsTableViewCell : UITableViewCell {
         }
         self.favoriteClickedUsername = item.user.login
         favoriteToggleButton.addTarget(self, action: #selector(toggleFavoriteUser), for: .touchUpInside)
+    }
+    
+    func toggleFavoriteInViewModel(){
+        
     }
 }
 
