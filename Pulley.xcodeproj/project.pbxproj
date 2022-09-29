@@ -211,7 +211,6 @@
 			mainGroup = 060CA8CF285228E50053196E;
 			packageReferences = (
 				060CA8F828522BFF0053196E /* XCRemoteSwiftPackageReference "SnapKit" */,
-				0652EE8E28CB37FA00470050 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 060CA8D9285228E50053196E /* Products */;
 			projectDirPath = "";
@@ -470,14 +469,6 @@
 
 /* Begin XCRemoteSwiftPackageReference section */
 		060CA8F828522BFF0053196E /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit";
-			requirement = {
-				kind = exactVersion;
-				version = 5.6.0;
-			};
-		};
-		0652EE8E28CB37FA00470050 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {

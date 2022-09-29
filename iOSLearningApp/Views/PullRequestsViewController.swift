@@ -87,7 +87,7 @@ extension PullRequestsViewController : UITableViewDataSource, UITableViewDelegat
         if indexPath.section ==  lastSectionIndex && indexPath.row == lastRowIndex {
                 let spinner = UIActivityIndicatorView()
                 spinner.startAnimating()
-                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(44))
+                spinner.frame = CGRect(x: CGFloat(FloatConstants.pt0.rawValue), y: CGFloat(FloatConstants.pt0.rawValue), width: tableView.bounds.width, height: CGFloat(FloatConstants.pt44.rawValue))
 
                 self.pullRequestTableView.tableFooterView = spinner
                 self.pullRequestTableView.tableFooterView?.isHidden = false

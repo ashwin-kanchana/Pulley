@@ -99,7 +99,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         favoriteToggleButton.snp.makeConstraints{
             make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-10)
+            make.trailing.equalToSuperview().offset(-10).priority(.high )
         }
         
         favoriteToggleButton.setContentCompressionResistancePriority(.required, for: .horizontal)
