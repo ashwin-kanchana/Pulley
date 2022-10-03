@@ -189,7 +189,7 @@ extension UserDetailsViewController : UserDetailsViewModelDelegate {
     }
     
     func showError(_ errorMessage: String) {
-        print(errorMessage)
+        //do nothing
     }
     
     func setData() {

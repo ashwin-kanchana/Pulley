@@ -11,8 +11,6 @@ import Foundation
 protocol PullRequestsViewModelDelegate : AnyObject {
     func showLoader(_ show : Bool)
     func loadData()
-    func showError(_ errorMessage: String)
-    func toggleFavorite(_ username: String)
 }
 
 class PullRequestsViewModel {
@@ -145,10 +143,7 @@ class PullRequestsViewModel {
                     self.initialLoad = false
                 }
             }
-            else {
-                self.pullRequestsDelegate?.showLoader(false)
-                self.pullRequestsDelegate?.showError(.Constants.defaultErrorMessage.rawValue)
-            }
+            else { self.pullRequestsDelegate?.showLoader(false) }
         }
     }
     

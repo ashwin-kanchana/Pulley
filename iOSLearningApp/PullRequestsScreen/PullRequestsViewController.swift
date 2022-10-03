@@ -134,12 +134,4 @@ extension PullRequestsViewController : PullRequestsViewModelDelegate {
     func loadData() {
         pullRequestTableView.reloadData()
     }
-    
-    func showError(_ errorMessage: String) {
-        print(errorMessage)
-    }
-    
-    func toggleFavorite(_ username: String) {
-        print(username)
-    }
 }
