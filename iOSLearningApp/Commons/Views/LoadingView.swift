@@ -14,20 +14,19 @@ class LoadingView: UIView {
     private let loadingContainer: UIView
     private let activityIndicator = UIActivityIndicatorView()
     
-    
     override init(frame : CGRect) {
         loadingContainer = UIView(frame: frame)
         super.init(frame: frame)
         self.addSubview(loadingContainer)
-        loadingContainer.snp.makeConstraints { make in
+        loadingContainer.snp.makeConstraints {
+            make in
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         loadingContainer.addSubview(activityIndicator)
-        activityIndicator.snp.makeConstraints { make in
+        activityIndicator.snp.makeConstraints {
+            make in
             make.leading.equalToSuperview().offset(IntConstants.pt200.rawValue)
             make.top.equalToSuperview().offset(IntConstants.pt400.rawValue)
-//            make.centerX.equalToSuperview()
-//            make.centerY.equalToSuperview()
         }
         activityIndicator.style = UIActivityIndicatorView.Style.large
         activityIndicator.startAnimating()
@@ -35,7 +34,8 @@ class LoadingView: UIView {
     
     override func addSubview(_ view: UIView) {
         super.addSubview(view)
-        self.snp.makeConstraints { make in
+        self.snp.makeConstraints {
+            make in
             make.height.equalTo(self.frame.size.width)
             make.width.equalTo(self.frame.size.width)
         }
@@ -44,7 +44,5 @@ class LoadingView: UIView {
     required init?(coder: NSCoder) {
         fatalError(.Constants.initMissingError.rawValue)
     }
-    
-    
 
 }

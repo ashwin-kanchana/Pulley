@@ -7,7 +7,7 @@
 
 import Foundation
 
-public func getUserDeatailLabelByKey (_ key: String) -> String{
+public func getUserDeatailLabelByKey (_ key: String) -> String { 
     switch key {
     case "company":
         return "Company"

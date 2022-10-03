@@ -79,7 +79,7 @@ class UserDetailsViewModel {
             newState in
             self.isUserFavorited = newState
             self.userDetailsDelegate?.toggleFavorite(newState)
-            let notificationName = newState ? String.Constants.favoriteUserNotificationKey.rawValue :
+            let notificationName = newState ? String.Constants.favoriteUserNotificationKey.rawValue:
                 String.Constants.unFavoriteUserNotificationKey.rawValue
             let customData = [String.Constants.notificationDataKey.rawValue: username] 
             NotificationCenter.default.post(name: Notification.Name(notificationName), object: nil, userInfo: customData)

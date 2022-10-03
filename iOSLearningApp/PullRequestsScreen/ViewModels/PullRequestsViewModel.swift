@@ -8,8 +8,8 @@
 import Foundation
 
 // MARK: PullRequests ViewModel Delegate
-protocol PullRequestsViewModelDelegate : AnyObject {
-    func showLoader(_ show : Bool)
+protocol PullRequestsViewModelDelegate: AnyObject {
+    func showLoader(_ show: Bool)
     func loadData()
 }
 
@@ -142,8 +142,7 @@ class PullRequestsViewModel {
                     self.pullRequestsDelegate?.showLoader(false)
                     self.initialLoad = false
                 }
-            }
-            else { self.pullRequestsDelegate?.showLoader(false) }
+            } else { self.pullRequestsDelegate?.showLoader(false) }
         }
     }
     

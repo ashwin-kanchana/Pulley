@@ -79,7 +79,7 @@ extension PullRequestsViewController : UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let userDetailsView = UserDetailsViewController(username: pullRequestViewModel.pullRequestsList[indexPath.row].user.login)
-        self.navigationController?.pushViewController(userDetailsView,animated:true)
+        self.navigationController?.pushViewController(userDetailsView, animated:true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

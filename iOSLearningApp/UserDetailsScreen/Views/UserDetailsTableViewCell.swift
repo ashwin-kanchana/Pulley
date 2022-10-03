@@ -27,17 +27,17 @@ class UserDetailsTableViewCell: UITableViewCell {
     
     func setupViewsInCell() {
         self.contentView.addSubview(containerView)
-        containerView.snp.makeConstraints{
+        containerView.snp.makeConstraints {
             make in
             make.leading.trailing.top.bottom.equalToSuperview().offset(IntConstants.pt20.rawValue)
         }
         containerView.addSubview(descriptionLabel)
-        descriptionLabel.snp.makeConstraints{
+        descriptionLabel.snp.makeConstraints {
             make in
             make.leading.top.equalToSuperview().offset(IntConstants.pt4.rawValue)
         }
         containerView.addSubview(valueLabel)
-        valueLabel.snp.makeConstraints{
+        valueLabel.snp.makeConstraints {
             make in
             make.top.equalToSuperview().offset(IntConstants.pt4.rawValue)
             make.trailing.equalToSuperview().offset(IntConstants.ptN40.rawValue)

@@ -54,7 +54,7 @@ class UserDetailsHeaderView: UIView {
         headerContainer.addSubview(avatarImageView)
         avatarImageView.layer.cornerRadius = CGFloat(IntConstants.pt70.rawValue)
         avatarImageView.clipsToBounds = true
-        avatarImageView.snp.makeConstraints{
+        avatarImageView.snp.makeConstraints {
             make in
             make.height.width.equalTo(140)
             make.top.equalTo(headerContainer.snp.top)

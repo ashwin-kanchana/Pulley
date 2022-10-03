@@ -71,7 +71,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         containerView.backgroundColor = .white
         containerView.layer.borderColor = UIColor.lightGray.cgColor
         containerView.layer.borderWidth = CGFloat(FloatConstants.pt1.rawValue)
-        containerView.snp.makeConstraints{
+        containerView.snp.makeConstraints {
             make in
             make.leading.trailing.top.bottom.equalToSuperview().inset(IntConstants.pt8.rawValue)
         }
@@ -81,7 +81,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         containerView.addSubview(avatarImageView)
         avatarImageView.layer.cornerRadius = CGFloat(FloatConstants.pt35.rawValue)
         avatarImageView.clipsToBounds = true
-        avatarImageView.snp.makeConstraints{
+        avatarImageView.snp.makeConstraints {
             make in
             make.leading.top.equalToSuperview().offset(IntConstants.pt10.rawValue)
             make.height.width.equalTo(IntConstants.pt70.rawValue)
@@ -96,7 +96,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         titleLabel.textColor = .black
         titleLabel.numberOfLines = 1
         titleLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(FloatConstants.pt16.rawValue))
-        titleLabel.snp.makeConstraints{
+        titleLabel.snp.makeConstraints {
             make in
             make.top.equalToSuperview().offset(IntConstants.pt10.rawValue)
             make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt10.rawValue)
@@ -108,7 +108,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         subTitleLabel.textColor = .black
         subTitleLabel.numberOfLines = 0
         subTitleLabel.font = subTitleLabel.font.withSize(CGFloat(IntConstants.pt14.rawValue))
-        subTitleLabel.snp.makeConstraints{
+        subTitleLabel.snp.makeConstraints {
             make in
             make.top.equalTo(titleLabel.snp.bottom).offset(IntConstants.pt5.rawValue)
             make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt10.rawValue)
@@ -135,7 +135,7 @@ class PullRequestsTableViewCell : UITableViewCell {
         bodyLabel.textColor = .darkGray
         bodyLabel.numberOfLines = 0
         bodyLabel.font = bodyLabel.font.withSize(CGFloat(FloatConstants.pt14.rawValue))
-        bodyLabel.snp.makeConstraints{
+        bodyLabel.snp.makeConstraints {
             make in
             make.top.equalTo(subTitleLabel.snp.bottom).offset(IntConstants.pt5.rawValue)
             make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt10.rawValue)
