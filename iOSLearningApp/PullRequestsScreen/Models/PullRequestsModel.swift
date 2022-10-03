@@ -1,8 +1,8 @@
 //
-//  SampleResponse.swift
-//  iOSLearningApp
+//  PullRequestsModel.swift
+//  Pulley
 //
-//  Created by Ashwin K on 21/09/22.
+//  Created by Ashwin K on 03/10/22.
 //
 
 import Foundation
@@ -18,23 +18,9 @@ struct PullRequestItem : Codable {
     let body : String?
 }
 
-struct User : Codable {
-    let id : Int64
-    let type :  String
-    let login:  String
-    let avatar_url: String
-    let html_url: String
-}
-
 struct PullRequestTableCellItem : Codable {
     let id : Int64
     let title : String
     var user : TableCellUser
     let body : String?
-}
-
-struct TableCellUser : Codable {
-    let login:  String
-    let avatar_url: String
-    var isFavorite: Bool
 }

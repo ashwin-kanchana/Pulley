@@ -5,11 +5,12 @@
 //  Created by Ashwin K on 28/09/22.
 //
 
+import Foundation
 import UIKit
 import SnapKit
-import Foundation
 
 class UserDetailsHeaderView: UIView {
+    // MARK: Private properties
     private let headerContainer = UIView()
     private let usernameLabel = UILabel()
     private let nameLabel = UILabel()
@@ -19,8 +20,7 @@ class UserDetailsHeaderView: UIView {
     private let followingHelperLabel = UILabel()
     private let avatarImageView = UIImageView()
     
-    
-    override init(frame : CGRect) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         configureAllViews()
     }
@@ -29,12 +29,12 @@ class UserDetailsHeaderView: UIView {
         fatalError(.Constants.initMissingError.rawValue)
     }
     
-    private func configureAllViews(){
+    private func configureAllViews() {
         self.addSubview(headerContainer)
-        headerContainer.snp.makeConstraints { make in
+        headerContainer.snp.makeConstraints {
+            make in
             make.top.leading.trailing.equalToSuperview()
         }
-
         configureAvatarImageView()
         configureNameLabel()
         configureUsernameLabel()
@@ -44,50 +44,47 @@ class UserDetailsHeaderView: UIView {
     
     override func addSubview(_ view: UIView) {
         super.addSubview(view)
-        self.snp.makeConstraints { make in
-            make.height.width.equalTo(140)
+        self.snp.makeConstraints {
+            make in
+            make.height.width.equalTo(IntConstants.pt140.rawValue)
         }
     }
     
-
-    private func configureAvatarImageView(){
+    private func configureAvatarImageView() {
         headerContainer.addSubview(avatarImageView)
-        avatarImageView.layer.cornerRadius = 70
+        avatarImageView.layer.cornerRadius = CGFloat(IntConstants.pt70.rawValue)
         avatarImageView.clipsToBounds = true
         avatarImageView.snp.makeConstraints{
             make in
             make.height.width.equalTo(140)
             make.top.equalTo(headerContainer.snp.top)
             make.bottom.equalTo(headerContainer.snp.bottom)
-            make.leading.equalToSuperview().offset(10)
+            make.leading.equalToSuperview().offset(IntConstants.pt10.rawValue)
         }
     }
     
-    
-    private func configureNameLabel(){
+    private func configureNameLabel() {
         headerContainer.addSubview(nameLabel)
         nameLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
         nameLabel.snp.makeConstraints{
             make in
-            make.top.equalTo(headerContainer.snp.top).offset(20)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(20)
+            make.top.equalTo(headerContainer.snp.top).offset(IntConstants.pt20.rawValue)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt20.rawValue)
         }
     }
     
-    
-    private func configureUsernameLabel(){
+    private func configureUsernameLabel() {
         headerContainer.addSubview(usernameLabel)
         usernameLabel.font = UIFont.systemFont(ofSize: 16.0)
         usernameLabel.textColor = .systemBlue
         usernameLabel.snp.makeConstraints{
             make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(5)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(20)
+            make.top.equalTo(nameLabel.snp.bottom).offset(IntConstants.pt5.rawValue)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt20.rawValue)
         }
     }
     
-    
-    private func configureFollowersLabel(){
+    private func configureFollowersLabel() {
         headerContainer.addSubview(followersLabel)
         headerContainer.addSubview(followersHelperLabel)
         followersHelperLabel.isHidden = true
@@ -95,8 +92,8 @@ class UserDetailsHeaderView: UIView {
         followersHelperLabel.font = UIFont.systemFont(ofSize: 12.0)
         followersLabel.snp.makeConstraints{
             make in
-            make.top.equalTo(usernameLabel.snp.bottom).offset(10)
-            make.leading.equalTo(avatarImageView.snp.trailing).offset(20)
+            make.top.equalTo(usernameLabel.snp.bottom).offset(IntConstants.pt10.rawValue)
+            make.leading.equalTo(avatarImageView.snp.trailing).offset(IntConstants.pt20.rawValue)
         }
         followersHelperLabel.snp.makeConstraints{
             make in
@@ -106,16 +103,16 @@ class UserDetailsHeaderView: UIView {
     }
     
     
-    private func configureFollowingLabel(){
+    private func configureFollowingLabel() {
         headerContainer.addSubview(followingLabel)
         headerContainer.addSubview(followingHelperLabel)
         followingHelperLabel.isHidden = true
         followingHelperLabel.text = .Constants.followingHelperLabelValue.rawValue
-        followingHelperLabel.font = UIFont.systemFont(ofSize: 12.0)
+        followingHelperLabel.font = UIFont.systemFont(ofSize: CGFloat(FloatConstants.pt12.rawValue))
         followingLabel.snp.makeConstraints{
             make in
-            make.top.equalTo(usernameLabel.snp.bottom).offset(10)
-            make.trailing.equalTo(followersLabel.snp.trailing).offset(80)
+            make.top.equalTo(usernameLabel.snp.bottom).offset(IntConstants.pt10.rawValue)
+            make.trailing.equalTo(followersLabel.snp.trailing).offset(IntConstants.pt80.rawValue)
         }
         followingHelperLabel.snp.makeConstraints{
             make in
@@ -124,7 +121,8 @@ class UserDetailsHeaderView: UIView {
         }
     }
     
-    func setData(_ userDetails: UserDetails) {
+    // MARK: Public method
+    public func setData(_ userDetails: UserDetails) {
         nameLabel.text = userDetails.name
         usernameLabel.text = "@\(userDetails.login)"
         followingLabel.text = String(userDetails.following)
@@ -137,5 +135,4 @@ class UserDetailsHeaderView: UIView {
             }
         }
     }
-
 }

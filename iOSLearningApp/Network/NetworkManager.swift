@@ -8,14 +8,13 @@
 import Foundation
 import UIKit
 
-
-class NetworkManager {
-    static let shared = NetworkManager()
+// MARK: Singleton NetworkManager
+public final class NetworkManager {
+    public static let shared = NetworkManager()
     
-    private init (){}
+    private init () {} 
     
-    
-    func fetchData<T:Decodable>(_ api: API, completionHandler: @escaping (T?) -> Void){
+    public func fetchData<T:Decodable>(_ api: API, completionHandler: @escaping (T?) -> Void) {
         var urlQueryItems: [URLQueryItem] = []
         if let queryParams = api.queryParams {
             queryParams.forEach{
@@ -37,9 +36,7 @@ class NetworkManager {
         urlRequest.allHTTPHeaderFields = api.headers
         urlRequest.httpBody = nil
         
-        
         URLSession.shared.dataTask(with: urlRequest, completionHandler: { (data, response, error) -> Void in
-            
             if let data = data {
                 do {
                     let object = try JSONDecoder().decode(T.self, from: data)
@@ -48,7 +45,7 @@ class NetworkManager {
                     }
                 }
                 catch {
-                    print(error)
+                    completionHandler(nil)
                 }
             }
             else {
@@ -58,46 +55,14 @@ class NetworkManager {
         }).resume()
     }
     
-    func fetchImage(_ url: String, completionHandler: @escaping (_ image: UIImage?) ->Void){
+    public func fetchImage(_ url: String, completionHandler: @escaping (_ image: UIImage?) -> Void) {
         URLSession.shared.dataTask(with: NSURL(string: url )! as URL, completionHandler: {
             (data, response, error) -> Void in
-            if let error = error {
-                print(error)
+            guard let data = data else {
+                return
             }
-            let image = UIImage(data: data!)
+            let image = UIImage(data: data)
             completionHandler(image)
         }).resume()
     }
 }
-
-protocol API {
-    var baseUrl: String { get }
-    var path: String { get }
-    var queryParams: [String: String]? { get }
-   
-}
-
-extension API {
-    var baseUrl: String {
-        return APIConstants.baseURL.rawValue
-    }
-    var method: HTTPMethod {
-        return .GET
-    }
-    
-    var headers: [String: String]? {
-        return nil
-        
-    }
-    var body: [String: String]? { return nil }
-}
-
-enum HTTPMethod: String {
-    case GET
-    case POST
-    case PUT
-    case DELETE
-    case PATCH
-}
-
-

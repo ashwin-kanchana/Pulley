@@ -5,9 +5,25 @@
 //  Created by Ashwin K on 22/09/22.
 //
 
-struct UserDetails : Codable {
-    let type :  String?
+import Foundation
+
+struct User : Codable {
+    let id : Int64
+    let type :  String
     let login:  String
+    let avatar_url: String
+    let html_url: String
+}
+
+struct TableCellUser : Codable {
+    let login:  String
+    let avatar_url: String
+    var isFavorite: Bool
+}
+
+struct UserDetails: Codable {
+    let type: String?
+    let login: String
     let avatar_url: String
     let name: String?
     let company: String?
@@ -22,11 +38,8 @@ struct UserDetails : Codable {
     let created_at: String?
 }
 
-
 struct UserDetailsListItem: Codable {
     let key: String
     let labelName: String
     let value: String
 }
-
-

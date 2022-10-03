@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 import SnapKit
 
-
-
 class UserDetailsViewController: UIViewController {
     private let userDetailsViewModel: UserDetailsViewModel
     private let username: String
@@ -20,7 +18,6 @@ class UserDetailsViewController: UIViewController {
     private let loadingView = LoadingView()
     private var userDetails: UserDetails?
     private var userDetailsList: [UserDetailsListItem] = []
-    
     private var navSaveButton = UIBarButtonItem()
     private var navFavoriteButton = UIBarButtonItem()
     
@@ -42,9 +39,7 @@ class UserDetailsViewController: UIViewController {
         configureAllViews()
     }
     
-    
-    
-    private func configureAllViews(){
+    private func configureAllViews() {
         self.view.addSubview(userDetailsView)
         userDetailsView.snp.makeConstraints{
             make in
@@ -53,7 +48,7 @@ class UserDetailsViewController: UIViewController {
         userDetailsView.backgroundColor = .white
     }
     
-    private func configureNavigationBarButttons(){
+    private func configureNavigationBarButttons() {
         navSaveButton.action = #selector(toggleSaveUserDetails)
         navSaveButton.image = userDetailsViewModel.isUserSaved ? .Assets.unsave.image : .Assets.save.image
         navSaveButton.target = self
@@ -63,48 +58,69 @@ class UserDetailsViewController: UIViewController {
         navigationItem.rightBarButtonItems = [ navSaveButton, navFavoriteButton ]
     }
     
-    
-    @objc private func toggleSaveUserDetails(){
-        if(userDetailsViewModel.isUserSaved){
-            let confirmationAlert = UIAlertController(title: .Constants.unSaveConfirmationMessage.rawValue, message: .Constants.areYouSureMessage.rawValue, preferredStyle: UIAlertController.Style.alert)
-            confirmationAlert.addAction(UIAlertAction(title: .Constants.confirmAction.rawValue, style: .destructive, handler: { (action: UIAlertAction!) in
+    @objc
+    private func toggleSaveUserDetails() {
+        if userDetailsViewModel.isUserSaved {
+            let confirmationAlert = UIAlertController(
+                title: .Constants.unSaveConfirmationMessage.rawValue,
+                message: .Constants.areYouSureMessage.rawValue,
+                preferredStyle: UIAlertController.Style.alert
+            )
+            confirmationAlert.addAction(UIAlertAction(
+                title: .Constants.confirmAction.rawValue,
+                style: .destructive,
+                handler: { (action: UIAlertAction!) in
                 DispatchQueue.main.async { [self] in
                     userDetailsViewModel.toggleSaveUser(username, self.userDetails)
                 }
             }))
-            confirmationAlert.addAction(UIAlertAction(title: .Constants.cancelAction.rawValue, style: .cancel, handler: { (action: UIAlertAction!) in
+            confirmationAlert.addAction(UIAlertAction(
+                title: .Constants.cancelAction.rawValue,
+                style: .cancel,
+                handler: { (action: UIAlertAction!) in
                   //do nothing
             }))
             present(confirmationAlert, animated: true, completion: nil)
         }
-        else{
+        else {
             userDetailsViewModel.toggleSaveUser(username, userDetails)
         }
     }
     
-    @objc private func toggleFavoriteUser(){
-        if(userDetailsViewModel.isUserFavorited){
-            let confirmationAlert = UIAlertController(title: .Constants.unFavoriteConfirmationMessage.rawValue, message: .Constants.areYouSureMessage.rawValue, preferredStyle: UIAlertController.Style.alert)
-            confirmationAlert.addAction(UIAlertAction(title: .Constants.confirmAction.rawValue, style: .destructive, handler: { (action: UIAlertAction!) in
+    @objc
+    private func toggleFavoriteUser() {
+        if userDetailsViewModel.isUserFavorited {
+            let confirmationAlert = UIAlertController(
+                title: .Constants.unFavoriteConfirmationMessage.rawValue,
+                message: .Constants.areYouSureMessage.rawValue,
+                preferredStyle: UIAlertController.Style.alert
+            )
+            confirmationAlert.addAction(UIAlertAction(
+                title: .Constants.confirmAction.rawValue,
+                style: .destructive,
+                handler: { (action: UIAlertAction!) in
                 DispatchQueue.main.async { [self] in
                     self.userDetailsViewModel.toggleFavoriteUser(username)
                 }
             }))
-            confirmationAlert.addAction(UIAlertAction(title: .Constants.cancelAction.rawValue, style: .cancel, handler: { (action: UIAlertAction!) in
+            confirmationAlert.addAction(UIAlertAction(
+                title: .Constants.cancelAction.rawValue,
+                style: .cancel,
+                handler: { (action: UIAlertAction!) in
                   //do nothing
             }))
             present(confirmationAlert, animated: true, completion: nil)
         }
-        else{
+        else {
             userDetailsViewModel.toggleFavoriteUser(username)
         }
     }
     
-    private func updateFavoriteToggleIcon(){
+    private func updateFavoriteToggleIcon() {
         self.navFavoriteButton.image = userDetailsViewModel.isUserFavorited ? .Assets.unfav.image : .Assets.fav.image
     }
     
-    private func updateSaveToggleIcon(){
+    private func updateSaveToggleIcon() {
         self.navSaveButton.image = userDetailsViewModel.isUserSaved ? .Assets.unsave.image : .Assets.save.image
     }
     
@@ -124,8 +140,7 @@ extension UserDetailsViewController : UITableViewDataSource {
     }
 }
 
-
-
+// MARK: UserDetails ViewModel Delegate functions
 extension UserDetailsViewController : UserDetailsViewModelDelegate {
     func toggleFavorite(_ newState: Bool) {
         updateFavoriteToggleIcon()
@@ -136,10 +151,10 @@ extension UserDetailsViewController : UserDetailsViewModelDelegate {
     }
     
     func showLoader(_ show: Bool) {
-        if(show){
+        if show {
             userDetailsView.addSubview(loadingView)
         }
-        else{
+        else {
             DispatchQueue.main.async {
                 [self] in
                 loadingView.removeFromSuperview()
@@ -153,7 +168,10 @@ extension UserDetailsViewController : UserDetailsViewModelDelegate {
                 userDetailsView.addSubview(self.userDetailsTableView)
                 self.userDetailsTableView.separatorColor = UIColor.clear
                 self.userDetailsTableView.dataSource = self
-                self.userDetailsTableView.register(UserDetailsTableViewCell.self, forCellReuseIdentifier: .Constants.userDetailsCellIdentifier.rawValue)
+                self.userDetailsTableView.register(
+                    UserDetailsTableViewCell.self,
+                    forCellReuseIdentifier: .Constants.userDetailsCellIdentifier.rawValue
+                )
                 self.userDetailsTableView.snp.makeConstraints{
                     make in
                     make.top.equalTo(self.userDetailsStickyHeader.snp.bottom)
@@ -168,7 +186,6 @@ extension UserDetailsViewController : UserDetailsViewModelDelegate {
         self.userDetailsList = userDetailsList
         self.userDetails = userDetails
         setData()
-        
     }
     
     func showError(_ errorMessage: String) {
@@ -182,6 +199,4 @@ extension UserDetailsViewController : UserDetailsViewModelDelegate {
         configureNavigationBarButttons()
         userDetailsStickyHeader.setData(userDetails)
     }
-    
-    
 }
