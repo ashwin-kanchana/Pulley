@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import AKNetworkManager
 
 class UserDetailsHeaderView: UIView {
     // MARK: Private properties

@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import AKNetworkManager
+import AKUserDefaultsManager
 
 // MARK: UserDetails ViewModel Delegate
 protocol UserDetailsViewModelDelegate : AnyObject {
@@ -39,9 +41,9 @@ class UserDetailsViewModel {
     public func viewDidLoad() {
         userDetailsDelegate?.showLoader(true)
         if UserDefaultsManager.shared.checkIfExists(username) {
-            UserDefaultsManager.shared.getData(username) { [weak self]
-                userDetails in
-                guard let userDetails = userDetails, let self = self else {
+            UserDefaultsManager.shared.getData(username) {
+            (userDetails: UserDetails?) in
+                guard let userDetails = userDetails else {
                     return
                 }
                 DispatchQueue.main.async {

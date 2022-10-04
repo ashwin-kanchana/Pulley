@@ -15,12 +15,12 @@ public protocol API {
 }
 
 public extension API {
-    var baseUrl: String {
-        return APIConstants.baseURL.rawValue
-    }
-    
     var method: HTTPMethod {
         return .GET
+    }
+    
+    var scheme: String {
+        return HTTPScheme.HTTP.rawValue
     }
     
     var headers: [String: String]? {
@@ -39,4 +39,10 @@ public enum HTTPMethod: String {
     case PUT
     case DELETE
     case PATCH
+}
+
+// MARK: HTTPScheme enum
+public enum HTTPScheme: String {
+    case HTTP
+    case HTTPS
 }

@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import AKNetworkManager
 
 struct UserDetailsAPI: API {
     let username: String
+    
+    var baseUrl: String {
+        return APIConstants.baseURL.rawValue
+    }
     
     var path: String {
         return "\(APIConstants.userDetailsPath.rawValue)\(username)"

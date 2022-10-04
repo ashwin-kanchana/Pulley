@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 // MARK: Singleton NetworkManager
-public final class NetworkManager {
+public class NetworkManager {
     public static let shared = NetworkManager()
     
     private init () {} 
@@ -26,7 +26,7 @@ public final class NetworkManager {
         }
         
         var components = URLComponents()
-        components.scheme = APIConstants.httpsScheme.rawValue
+        components.scheme = api.scheme
         components.host = api.baseUrl
         components.path = api.path
         components.queryItems = urlQueryItems

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class UserDefaultsManager {
+public class UserDefaultsManager {
     public static let shared = UserDefaultsManager()
     
     private init() {}
@@ -25,10 +25,10 @@ public final class UserDefaultsManager {
         }
     }
     
-    internal func getData(_ key: String, completionHandler: @escaping (_ userDetails: UserDetails?) -> Void) {
+    public func getData<T: Codable>(_ key: String, completionHandler: @escaping (T?) -> Void) {
         if let data = UserDefaults.standard.data(forKey: key) {
             do {
-                let userDetails = try JSONDecoder().decode(UserDetails.self, from: data)
+                let userDetails = try JSONDecoder().decode(T.self, from: data)
                 completionHandler(userDetails)
             } catch {
                 completionHandler(nil)
@@ -46,6 +46,11 @@ public final class UserDefaultsManager {
     }
     
     public func generateKeyForFavoriteUser(_ userName: String) -> String {
-        return .Constants.favoriteUserDefaultsKeyPrefix.rawValue + userName
+        return UserDefaultKeys.Favorite.rawValue + userName
     }
+}
+
+// MARK: Favorite user enum
+public enum UserDefaultKeys: String {
+    case Favorite
 }

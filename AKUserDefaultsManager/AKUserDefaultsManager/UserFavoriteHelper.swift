@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import AKUserDefaultsManager
 
 public extension UserDefaultsManager {
     func userFavoriteHelper(_ username: String, completionHandler: @escaping (_ newState: Bool) -> Void) {
@@ -17,11 +16,7 @@ public extension UserDefaultsManager {
                 completionHandler(false)
             })
         } else {
-            let dummyUserData: UserDetailsListItem = UserDetailsListItem(
-                key: key,
-                labelName: key,
-                value: key)
-            UserDefaultsManager.shared.setData(dummyUserData, key) {
+            UserDefaultsManager.shared.setData("", key) {
                 completionHandler(true)
             }
         }

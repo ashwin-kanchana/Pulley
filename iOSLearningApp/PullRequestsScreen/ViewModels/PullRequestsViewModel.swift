@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import AKUserDefaultsManager
+import AKNetworkManager
 
 // MARK: PullRequests ViewModel Delegate
 protocol PullRequestsViewModelDelegate: AnyObject {

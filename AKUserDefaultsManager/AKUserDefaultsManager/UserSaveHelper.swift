@@ -6,11 +6,10 @@
 //
 
 import Foundation
-import AKUserDefaultsManager
 
 public extension UserDefaultsManager {
-    internal func userSaveHelper(
-            _ username: String, _ userDetails: UserDetails?,
+    func userSaveHelper<T: Codable>(
+            _ username: String, _ userDetails: T?,
             completionHandler: @escaping (_ newState: Bool) -> Void) {
         let isUserSaved = UserDefaultsManager.shared.checkIfExists(username)
         if isUserSaved {

@@ -6,10 +6,15 @@
 //
 
 import Foundation
+import AKNetworkManager
 
 struct PullRequestAPI: API {
     let pageNumber: Int
     let pageSize: Int
+    
+    var baseUrl: String {
+        return APIConstants.baseURL.rawValue
+    }
     
     var path: String {
         return APIConstants.pullRequestsPath.rawValue
