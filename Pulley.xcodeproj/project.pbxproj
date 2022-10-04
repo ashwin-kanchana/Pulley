@@ -21,6 +21,7 @@
 		4D103C5528EA034700E3131A /* UserFavoriteHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D103C5428EA034700E3131A /* UserFavoriteHelper.swift */; };
 		4D103C5728EA036000E3131A /* UserSaveHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D103C5628EA036000E3131A /* UserSaveHelper.swift */; };
 		4D103C5928EA0EAD00E3131A /* UserDetailsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D103C5828EA0EAD00E3131A /* UserDetailsAPI.swift */; };
+		4D1D441928EC55BB00A48694 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4D1D441828EC55BB00A48694 /* Podfile */; };
 		4D43C2B128E3016A00E6B531 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D43C2B028E3016A00E6B531 /* LoadingView.swift */; };
 		4D43C2B328E30C2600E6B531 /* PullRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D43C2B228E30C2600E6B531 /* PullRequestsTableViewCell.swift */; };
 		4D5AD43128DC6C76006EAC20 /* UserDetailsListLabelsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5AD43028DC6C76006EAC20 /* UserDetailsListLabelsHelper.swift */; };
@@ -52,6 +53,7 @@
 		4D103C5428EA034700E3131A /* UserFavoriteHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFavoriteHelper.swift; sourceTree = "<group>"; };
 		4D103C5628EA036000E3131A /* UserSaveHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSaveHelper.swift; sourceTree = "<group>"; };
 		4D103C5828EA0EAD00E3131A /* UserDetailsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsAPI.swift; sourceTree = "<group>"; };
+		4D1D441828EC55BB00A48694 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		4D43C2B028E3016A00E6B531 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		4D43C2B228E30C2600E6B531 /* PullRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestsTableViewCell.swift; sourceTree = "<group>"; };
 		4D5AD43028DC6C76006EAC20 /* UserDetailsListLabelsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsListLabelsHelper.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		060CA8CF285228E50053196E = {
 			isa = PBXGroup;
 			children = (
+				4D1D441828EC55BB00A48694 /* Podfile */,
 				060CA8DA285228E50053196E /* iOSLearningApp */,
 				060CA8D9285228E50053196E /* Products */,
 				CC21F546461D0A5A65FB446E /* Pods */,
@@ -314,6 +317,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D1D441928EC55BB00A48694 /* Podfile in Resources */,
 				060CA8E8285228E70053196E /* LaunchScreen.storyboard in Resources */,
 				060CA8E5285228E70053196E /* Assets.xcassets in Resources */,
 			);
