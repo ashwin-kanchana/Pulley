@@ -8,7 +8,7 @@
 import Foundation
 
 public extension UserDefaultsManager {
-    func toggleFavoriteUser(_ username: String, completionHandler: @escaping (_ newState: Bool) -> Void) {
+    func userFavoriteHelper(_ username: String, completionHandler: @escaping (_ newState: Bool) -> Void) {
         let key = UserDefaultsManager.shared.generateKeyForFavoriteUser(username)
         let isFavoriteUser = UserDefaultsManager.shared.checkIfExists(key)
         if isFavoriteUser {

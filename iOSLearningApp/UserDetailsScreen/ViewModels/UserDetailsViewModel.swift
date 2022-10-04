@@ -65,7 +65,7 @@ class UserDetailsViewModel {
     }
     
     public func toggleSaveUser(_ username: String, _ userDetails: UserDetails?) {
-        UserDefaultsManager.shared.toggleUserSave(username, userDetails) { [self]
+        UserDefaultsManager.shared.userSaveHelper(username, userDetails) { [self]
             newState in
             isUserSaved = newState
             self.userDetailsDelegate?.toggleSave(newState)
@@ -73,7 +73,7 @@ class UserDetailsViewModel {
     }
     
     public func toggleFavoriteUser(_ username: String) {
-        UserDefaultsManager.shared.toggleFavoriteUser(username) {
+        UserDefaultsManager.shared.userFavoriteHelper(username) {
             newState in
             self.isUserFavorited = newState
             self.userDetailsDelegate?.toggleFavorite(newState)

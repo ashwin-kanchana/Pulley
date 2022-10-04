@@ -14,4 +14,5 @@ enum APIConstants : String {
     case pageQueryParam = "page"
     case perPageQyeryParam = "per_page"
     case userDetailsPath = "/users/"
+    case use
 }

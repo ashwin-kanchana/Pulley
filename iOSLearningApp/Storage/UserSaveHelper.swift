@@ -8,7 +8,7 @@
 import Foundation
 
 public extension UserDefaultsManager {
-    internal func toggleUserSave(
+    internal func userSaveHelper(
             _ username: String, _ userDetails: UserDetails?,
             completionHandler: @escaping (_ newState: Bool) -> Void) {
         let isUserSaved = UserDefaultsManager.shared.checkIfExists(username)

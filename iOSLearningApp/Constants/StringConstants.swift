@@ -28,5 +28,6 @@ extension String {
         case dismissAction = "Dismiss"
         case errorTitle = "Error"
         case initMissingError = "init(coder:) has not been implemented"
+        case usernamePrefixAt = "@"
     }
 }

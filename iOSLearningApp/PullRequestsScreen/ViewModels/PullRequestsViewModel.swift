@@ -32,7 +32,7 @@ class PullRequestsViewModel {
     
     // MARK: Public functions
     public func toggleFavorite(_ username: String) {
-        UserDefaultsManager.shared.toggleFavoriteUser(username) {
+        UserDefaultsManager.shared.userFavoriteHelper(username) {
             [self]
             newState in
             if let row = self.pullRequestsList.firstIndex(where: {$0.user.login == username}) {
