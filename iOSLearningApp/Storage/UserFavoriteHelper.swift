@@ -15,8 +15,7 @@ public extension UserDefaultsManager {
             UserDefaultsManager.shared.removeData(key, completionHandler: {
                 completionHandler(false)
             })
-        }
-        else{
+        } else {
             let dummyUserData: UserDetailsListItem = UserDetailsListItem(
                 key: key,
                 labelName: key,

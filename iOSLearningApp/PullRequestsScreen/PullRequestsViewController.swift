@@ -69,9 +69,12 @@ extension PullRequestsViewController : UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let dataCell = tableView.dequeueReusableCell(
-            withIdentifier: .Constants.pullRequestsCellIdentifier.rawValue
-        ) as! PullRequestsTableViewCell
+        guard let dataCell = tableView.dequeueReusableCell(
+            withIdentifier: .Constants.pullRequestsCellIdentifier.rawValue,
+            for: indexPath
+        ) as? PullRequestsTableViewCell else {
+                        return PullRequestsTableViewCell()
+        }
         let item = pullRequestViewModel.pullRequestsList[indexPath.row]
         dataCell.setPullRequestTableCellData(item: item, pullRequestViewModel: pullRequestViewModel)
         return dataCell
@@ -79,7 +82,7 @@ extension PullRequestsViewController : UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let userDetailsView = UserDetailsViewController(username: pullRequestViewModel.pullRequestsList[indexPath.row].user.login)
-        self.navigationController?.pushViewController(userDetailsView, animated:true)
+        self.navigationController?.pushViewController(userDetailsView, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -112,8 +115,7 @@ extension PullRequestsViewController : PullRequestsViewModelDelegate {
     func showLoader(_ show: Bool) {
         if show {
             pullRequestsContainerView.addSubview(loadingView)
-        }
-        else {
+        } else {
             DispatchQueue.main.async {
                 [self] in
                 loadingView.removeFromSuperview()
@@ -121,7 +123,10 @@ extension PullRequestsViewController : PullRequestsViewModelDelegate {
                 pullRequestTableView.separatorColor = UIColor.clear
                 pullRequestTableView.dataSource = self
                 pullRequestTableView.delegate = self
-                pullRequestTableView.register(PullRequestsTableViewCell.self, forCellReuseIdentifier: .Constants.pullRequestsCellIdentifier.rawValue)
+                pullRequestTableView.register(
+                    PullRequestsTableViewCell.self,
+                    forCellReuseIdentifier: .Constants.pullRequestsCellIdentifier.rawValue
+                )
                 pullRequestTableView.snp.makeConstraints{
                     make in
                     make.top.equalTo(screenHeadingLabel.snp.bottom)

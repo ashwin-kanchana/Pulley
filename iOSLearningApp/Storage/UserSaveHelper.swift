@@ -16,8 +16,7 @@ public extension UserDefaultsManager {
             UserDefaultsManager.shared.removeData(username, completionHandler: {
                 completionHandler(false)
             })
-        }
-        else{
+        } else {
             guard let userDetails = userDetails else {
                 return
             }

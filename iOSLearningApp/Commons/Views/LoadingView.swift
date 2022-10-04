@@ -23,6 +23,7 @@ class LoadingView: UIView {
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         loadingContainer.addSubview(activityIndicator)
+        
         activityIndicator.snp.makeConstraints {
             make in
             make.leading.equalToSuperview().offset(IntConstants.pt200.rawValue)
@@ -44,5 +45,4 @@ class LoadingView: UIView {
     required init?(coder: NSCoder) {
         fatalError(.Constants.initMissingError.rawValue)
     }
-
 }

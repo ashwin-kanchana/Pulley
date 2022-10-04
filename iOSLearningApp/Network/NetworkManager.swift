@@ -16,6 +16,7 @@ public final class NetworkManager {
     
     public func fetchData<T:Decodable>(_ api: API, completionHandler: @escaping (T?) -> Void) {
         var urlQueryItems: [URLQueryItem] = []
+        
         if let queryParams = api.queryParams {
             queryParams.forEach{
                 element in
@@ -23,6 +24,7 @@ public final class NetworkManager {
                 urlQueryItems.append(urlQueryItem)
             }
         }
+        
         var components = URLComponents()
         components.scheme = APIConstants.httpsScheme.rawValue
         components.host = api.baseUrl
@@ -31,6 +33,7 @@ public final class NetworkManager {
         guard let url = components.url else{
             return
         }
+        
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = api.method.rawValue
         urlRequest.allHTTPHeaderFields = api.headers
@@ -44,11 +47,8 @@ public final class NetworkManager {
                         completionHandler(object)
                     }
                 }
-                catch {
-                    completionHandler(nil)
-                }
-            }
-            else {
+                catch { completionHandler(nil) }
+            } else {
                 completionHandler(nil)
             }
             

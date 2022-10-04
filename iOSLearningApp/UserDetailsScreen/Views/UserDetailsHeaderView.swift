@@ -56,7 +56,7 @@ class UserDetailsHeaderView: UIView {
         avatarImageView.clipsToBounds = true
         avatarImageView.snp.makeConstraints {
             make in
-            make.height.width.equalTo(140)
+            make.height.width.equalTo(IntConstants.pt140.rawValue)
             make.top.equalTo(headerContainer.snp.top)
             make.bottom.equalTo(headerContainer.snp.bottom)
             make.leading.equalToSuperview().offset(IntConstants.pt10.rawValue)
@@ -65,7 +65,7 @@ class UserDetailsHeaderView: UIView {
     
     private func configureNameLabel() {
         headerContainer.addSubview(nameLabel)
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 20.0)
+        nameLabel.font = UIFont.boldSystemFont(ofSize: CGFloat(FloatConstants.pt20.rawValue))
         nameLabel.snp.makeConstraints{
             make in
             make.top.equalTo(headerContainer.snp.top).offset(IntConstants.pt20.rawValue)
@@ -75,7 +75,7 @@ class UserDetailsHeaderView: UIView {
     
     private func configureUsernameLabel() {
         headerContainer.addSubview(usernameLabel)
-        usernameLabel.font = UIFont.systemFont(ofSize: 16.0)
+        usernameLabel.font = UIFont.systemFont(ofSize: CGFloat(FloatConstants.pt16.rawValue))
         usernameLabel.textColor = .systemBlue
         usernameLabel.snp.makeConstraints{
             make in
@@ -89,7 +89,7 @@ class UserDetailsHeaderView: UIView {
         headerContainer.addSubview(followersHelperLabel)
         followersHelperLabel.isHidden = true
         followersHelperLabel.text = .Constants.followersHelperLabelValue.rawValue
-        followersHelperLabel.font = UIFont.systemFont(ofSize: 12.0)
+        followersHelperLabel.font = UIFont.systemFont(ofSize: CGFloat(FloatConstants.pt12.rawValue))
         followersLabel.snp.makeConstraints{
             make in
             make.top.equalTo(usernameLabel.snp.bottom).offset(IntConstants.pt10.rawValue)
@@ -114,6 +114,7 @@ class UserDetailsHeaderView: UIView {
             make.top.equalTo(usernameLabel.snp.bottom).offset(IntConstants.pt10.rawValue)
             make.trailing.equalTo(followersLabel.snp.trailing).offset(IntConstants.pt80.rawValue)
         }
+        
         followingHelperLabel.snp.makeConstraints{
             make in
             make.top.equalTo(followingLabel.snp.bottom)

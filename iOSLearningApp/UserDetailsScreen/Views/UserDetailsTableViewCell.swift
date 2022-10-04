@@ -31,12 +31,15 @@ class UserDetailsTableViewCell: UITableViewCell {
             make in
             make.leading.trailing.top.bottom.equalToSuperview().offset(IntConstants.pt20.rawValue)
         }
+        
         containerView.addSubview(descriptionLabel)
         descriptionLabel.snp.makeConstraints {
             make in
             make.leading.top.equalToSuperview().offset(IntConstants.pt4.rawValue)
         }
+        
         containerView.addSubview(valueLabel)
+        valueLabel.numberOfLines = .zero
         valueLabel.snp.makeConstraints {
             make in
             make.top.equalToSuperview().offset(IntConstants.pt4.rawValue)

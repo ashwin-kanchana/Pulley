@@ -57,7 +57,7 @@ class PullRequestsViewModel {
     @objc
     func addFavoriteNotification(notification: Notification) {
         let userInfo = notification.userInfo
-        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String {
             pullRequestsList = refreshFavoritesStateForList(pullRequestsList, username)
             self.pullRequestsDelegate?.loadData()
         }
@@ -66,7 +66,7 @@ class PullRequestsViewModel {
     @objc
     func removeFavoriteNotification(notification: Notification) {
         let userInfo = notification.userInfo
-        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String{
+        if let username = userInfo?[String.Constants.notificationDataKey.rawValue]  as? String {
             pullRequestsList = refreshFavoritesStateForList(pullRequestsList, username)
             self.pullRequestsDelegate?.loadData()
         }
@@ -111,7 +111,7 @@ class PullRequestsViewModel {
         return processedList
     }
     
-    private func preProcessFavoritesStateForList(_ items: [PullRequestItem]) -> [PullRequestTableCellItem]{
+    private func preProcessFavoritesStateForList(_ items: [PullRequestItem]) -> [PullRequestTableCellItem] {
         var processedList: [PullRequestTableCellItem] = []
         for item in items {
             let key = UserDefaultsManager.shared.generateKeyForFavoriteUser(item.user.login)

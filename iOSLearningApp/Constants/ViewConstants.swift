@@ -32,6 +32,7 @@ public enum FloatConstants: Float {
     case pt44 = 44.0
     case pt35 = 35.0
     case pt22 = 22.0
+    case pt20 = 20.0
     case pt14 = 14.0
     case pt16 = 16.0
     case pt12 = 12.0

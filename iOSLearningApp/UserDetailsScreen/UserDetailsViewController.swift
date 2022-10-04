@@ -66,6 +66,7 @@ class UserDetailsViewController: UIViewController {
                 message: .Constants.areYouSureMessage.rawValue,
                 preferredStyle: UIAlertController.Style.alert
             )
+            
             confirmationAlert.addAction(UIAlertAction(
                 title: .Constants.confirmAction.rawValue,
                 style: .destructive,
@@ -74,15 +75,16 @@ class UserDetailsViewController: UIViewController {
                     userDetailsViewModel.toggleSaveUser(username, self.userDetails)
                 }
             }))
+            
             confirmationAlert.addAction(UIAlertAction(
                 title: .Constants.cancelAction.rawValue,
                 style: .cancel,
                 handler: { (action: UIAlertAction!) in
                   //do nothing
             }))
+            
             present(confirmationAlert, animated: true, completion: nil)
-        }
-        else {
+        } else {
             userDetailsViewModel.toggleSaveUser(username, userDetails)
         }
     }
@@ -110,8 +112,7 @@ class UserDetailsViewController: UIViewController {
                   //do nothing
             }))
             present(confirmationAlert, animated: true, completion: nil)
-        }
-        else {
+        } else {
             userDetailsViewModel.toggleFavoriteUser(username)
         }
     }
@@ -133,7 +134,12 @@ extension UserDetailsViewController : UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: .Constants.userDetailsCellIdentifier.rawValue) as! UserDetailsTableViewCell
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: .Constants.userDetailsCellIdentifier.rawValue,
+            for: indexPath
+        ) as? UserDetailsTableViewCell else {
+            return UserDetailsTableViewCell()
+        }
         let item = userDetailsList[indexPath.row]
         cell.setUserDetailsTableCellData(item)
         return cell
@@ -153,8 +159,7 @@ extension UserDetailsViewController : UserDetailsViewModelDelegate {
     func showLoader(_ show: Bool) {
         if show {
             userDetailsView.addSubview(loadingView)
-        }
-        else {
+        } else {
             DispatchQueue.main.async {
                 [self] in
                 loadingView.removeFromSuperview()

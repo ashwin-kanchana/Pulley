@@ -49,8 +49,7 @@ class UserDetailsViewModel {
                     self.userDetailsDelegate?.showLoader(false)
                 }
             }
-        }
-        else { self.loadFromAPI() }
+        } else { self.loadFromAPI() }
     }
     
     public func loadFromAPI() {
@@ -58,8 +57,7 @@ class UserDetailsViewModel {
             if let userDetails = userDetails {
                 self.userDetailsDelegate?.loadData(userDetails, self.makeUserDetailListFromObject(userDetails))
                 self.userDetailsDelegate?.showLoader(false)
-            }
-            else {
+            } else {
                 self.userDetailsDelegate?.showLoader(false)
                 self.userDetailsDelegate?.showError(.Constants.defaultErrorMessage.rawValue)
             }
@@ -101,8 +99,7 @@ class UserDetailsViewModel {
                             value: value
                         )
                         userDetailsList.append(userDetailItem)
-                    }
-                    else if let value = attr.value as? Int {
+                    } else if let value = attr.value as? Int {
                         let userDetailItem = UserDetailsListItem(
                             key: label,
                             labelName: label,

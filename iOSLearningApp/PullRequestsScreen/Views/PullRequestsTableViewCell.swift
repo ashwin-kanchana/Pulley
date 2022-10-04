@@ -106,7 +106,7 @@ class PullRequestsTableViewCell : UITableViewCell {
     private func setupSubTitleLabelView() {
         containerView.addSubview(subTitleLabel)
         subTitleLabel.textColor = .black
-        subTitleLabel.numberOfLines = 0
+        subTitleLabel.numberOfLines = .zero
         subTitleLabel.font = subTitleLabel.font.withSize(CGFloat(IntConstants.pt14.rawValue))
         subTitleLabel.snp.makeConstraints {
             make in
@@ -123,6 +123,7 @@ class PullRequestsTableViewCell : UITableViewCell {
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().offset(IntConstants.ptN10.rawValue).priority(.high )
         }
+        
         favoriteToggleButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         favoriteToggleButton.snp.makeConstraints{
             make in
@@ -133,7 +134,7 @@ class PullRequestsTableViewCell : UITableViewCell {
     private func setupBodyLabelView() {
         containerView.addSubview(bodyLabel)
         bodyLabel.textColor = .darkGray
-        bodyLabel.numberOfLines = 0
+        bodyLabel.numberOfLines = .zero
         bodyLabel.font = bodyLabel.font.withSize(CGFloat(FloatConstants.pt14.rawValue))
         bodyLabel.snp.makeConstraints {
             make in
